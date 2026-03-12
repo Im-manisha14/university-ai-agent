@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Data Structures",
+    "code": "CS201",
+    "semester": 3,
+    "department": "CSE",
+    "credits": 4,
+    "faculty": "Prof. Kumar"
+  },
+  {
+    "id": 2,
+    "name": "Database Systems",
+    "code": "IT301",
+    "semester": 5,
+    "department": "IT",
+    "credits": 3,
+    "faculty": "Prof. Meena"
+  },
+  {
+    "id": 3,
+    "name": "Digital Electronics",
+    "code": "EC201",
+    "semester": 3,
+    "department": "ECE",
+    "credits": 4,
+    "faculty": "Prof. Rao"
+  }
+]

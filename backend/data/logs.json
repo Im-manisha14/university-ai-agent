@@ -1,0 +1,166 @@
+[
+  {
+    "id": 1,
+    "agentId": 1,
+    "agentName": "Student Management Agent",
+    "userMessage": "Enroll Rahul in IT department for 2024",
+    "aiAction": "create_student",
+    "actionData": {
+      "name": "Rahul",
+      "department": "IT",
+      "year": 2024,
+      "gpa": 0
+    },
+    "result": true,
+    "timestamp": "2026-03-12T06:17:03.933Z"
+  },
+  {
+    "id": 2,
+    "agentId": 1,
+    "agentName": "Student Management Agent",
+    "userMessage": "List all students",
+    "aiAction": "list_students",
+    "actionData": {},
+    "result": true,
+    "timestamp": "2026-03-12T06:17:13.238Z"
+  },
+  {
+    "id": 3,
+    "agentId": 1,
+    "agentName": "Student Management Agent",
+    "userMessage": "List all students",
+    "aiAction": "list_students",
+    "actionData": {},
+    "result": true,
+    "timestamp": "2026-03-12T06:18:46.118Z"
+  },
+  {
+    "id": 4,
+    "agentId": 1,
+    "agentName": "Student Management Agent",
+    "userMessage": "Enroll Rahul in IT department for 2024",
+    "aiAction": "create_student",
+    "actionData": {
+      "name": "Rahul",
+      "department": "IT",
+      "year": 2024,
+      "gpa": 0
+    },
+    "result": true,
+    "timestamp": "2026-03-12T06:19:07.147Z"
+  },
+  {
+    "id": 5,
+    "agentId": 2,
+    "agentName": "Faculty Management Agent",
+    "userMessage": "Show faculty workload",
+    "aiAction": "list_faculty",
+    "actionData": {},
+    "result": true,
+    "timestamp": "2026-03-12T06:20:01.658Z"
+  },
+  {
+    "id": 6,
+    "agentId": 2,
+    "agentName": "Faculty Management Agent",
+    "userMessage": "List all faculty",
+    "aiAction": "list_faculty",
+    "actionData": {},
+    "result": true,
+    "timestamp": "2026-03-12T07:19:43.409Z"
+  },
+  {
+    "id": 7,
+    "agentId": 1,
+    "agentName": "Student Management Agent",
+    "userMessage": "List all students",
+    "aiAction": "list_students",
+    "actionData": {},
+    "result": true,
+    "timestamp": "2026-03-12T07:24:07.892Z"
+  },
+  {
+    "id": 8,
+    "agentId": 1,
+    "agentName": "Student Management Agent",
+    "userMessage": "Show students in CSE",
+    "aiAction": "list_students",
+    "actionData": {},
+    "result": true,
+    "timestamp": "2026-03-12T07:46:40.885Z"
+  },
+  {
+    "id": 9,
+    "agentId": 1,
+    "agentName": "Student Management Agent",
+    "userMessage": "List all students",
+    "aiAction": "list_students",
+    "actionData": {},
+    "result": true,
+    "timestamp": "2026-03-12T07:51:45.946Z"
+  },
+  {
+    "id": 10,
+    "agentId": 4,
+    "agentName": "Exam Management Agent",
+    "userMessage": "Schedule exam for Data Structures on April 20",
+    "aiAction": "schedule_exam",
+    "actionData": {
+      "course": "Data Structures",
+      "date": "April 20",
+      "type": "midterm"
+    },
+    "result": true,
+    "timestamp": "2026-03-12T07:52:59.817Z"
+  },
+  {
+    "id": 11,
+    "agentId": 1,
+    "agentName": "Student Management Agent",
+    "userMessage": "Show students in CSE",
+    "aiAction": "list_students",
+    "actionData": {},
+    "result": true,
+    "timestamp": "2026-03-12T07:56:10.992Z"
+  },
+  {
+    "id": 12,
+    "agentId": 1,
+    "agentName": "Student Management Agent",
+    "userMessage": "REMOVE HARSHINI IN CSE A",
+    "aiAction": null,
+    "actionData": null,
+    "result": null,
+    "timestamp": "2026-03-12T07:56:50.784Z"
+  },
+  {
+    "id": 13,
+    "agentId": 1,
+    "agentName": "Student Management Agent",
+    "userMessage": "List all students",
+    "aiAction": "list_students",
+    "actionData": {},
+    "result": true,
+    "timestamp": "2026-03-12T07:58:13.673Z"
+  },
+  {
+    "id": 14,
+    "agentId": 1,
+    "agentName": "Student Management Agent",
+    "userMessage": "List all students",
+    "aiAction": "list_students",
+    "actionData": {},
+    "result": true,
+    "timestamp": "2026-03-12T08:14:27.277Z"
+  },
+  {
+    "id": 15,
+    "agentId": 1,
+    "agentName": "Student Management Agent",
+    "userMessage": "List all students",
+    "aiAction": "list_students",
+    "actionData": {},
+    "result": true,
+    "timestamp": "2026-03-12T08:23:50.664Z"
+  }
+]

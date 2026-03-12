@@ -1,0 +1,336 @@
+[
+  {
+    "id": 1,
+    "name": "Student Management Agent",
+    "domain": "students",
+    "description": "Handles student enrollment, updates, deletions, and student reports.",
+    "purpose": "Manage student records",
+    "allowedActions": [
+      "create_student",
+      "update_student",
+      "delete_student",
+      "list_students"
+    ],
+    "systemPrompt": "You are a Student Management AI Agent responsible for managing student records.\nYou can enroll students, update their information, delete records, and generate reports.\nYou must convert user requests into structured JSON actions.\n\nAllowed actions: create_student, update_student, delete_student, list_students\n\nFor each user query, return ONLY a JSON object with:\n{\n  \"action\": \"<action_name>\",\n  \"data\": { ...relevant fields... }\n}\n\nFields for students: name, department, year, gpa, email\nDo NOT include any text outside the JSON.",
+    "createdAt": "2026-03-12T06:16:54.478Z",
+    "chatHistory": [
+      {
+        "user": "Enroll Rahul in IT department for 2024",
+        "ai": "I'll enroll Rahul right away.",
+        "action": "create_student",
+        "timestamp": "2026-03-12T06:17:03.933Z"
+      },
+      {
+        "user": "List all students",
+        "ai": "Here are the current student records.",
+        "action": "list_students",
+        "timestamp": "2026-03-12T06:17:13.238Z"
+      },
+      {
+        "user": "List all students",
+        "ai": "Here are the current student records.",
+        "action": "list_students",
+        "timestamp": "2026-03-12T06:18:46.120Z"
+      },
+      {
+        "user": "Enroll Rahul in IT department for 2024",
+        "ai": "I'll enroll Rahul right away.",
+        "action": "create_student",
+        "timestamp": "2026-03-12T06:19:07.148Z"
+      },
+      {
+        "user": "List all students",
+        "ai": "Here are the current student records.",
+        "action": "list_students",
+        "timestamp": "2026-03-12T07:24:07.896Z"
+      },
+      {
+        "user": "Show students in CSE",
+        "ai": "Here are the current student records.",
+        "action": "list_students",
+        "timestamp": "2026-03-12T07:46:40.888Z"
+      },
+      {
+        "user": "List all students",
+        "ai": "Here are the current student records.",
+        "action": "list_students",
+        "timestamp": "2026-03-12T07:51:45.951Z"
+      },
+      {
+        "user": "Show students in CSE",
+        "ai": "Here are the current student records.",
+        "action": "list_students",
+        "timestamp": "2026-03-12T07:56:10.997Z"
+      },
+      {
+        "user": "REMOVE HARSHINI IN CSE A",
+        "ai": "I understand your request. Could you be more specific? I can help with operations like:\n• Enrolling/listing/updating/deleting students\n• Adding/listing faculty and assigning subjects\n• Creating/listing courses\n• Recording/reporting attendance\n• Scheduling exams\n• Generating reports",
+        "action": null,
+        "timestamp": "2026-03-12T07:56:50.788Z"
+      },
+      {
+        "user": "List all students",
+        "ai": "Here are the current student records.",
+        "action": "list_students",
+        "timestamp": "2026-03-12T07:58:13.675Z"
+      },
+      {
+        "user": "List all students",
+        "ai": "Here are the current student records.",
+        "action": "list_students",
+        "timestamp": "2026-03-12T08:14:27.278Z"
+      },
+      {
+        "user": "List all students",
+        "ai": "Here are the current student records.",
+        "action": "list_students",
+        "timestamp": "2026-03-12T08:23:50.665Z"
+      }
+    ],
+    "actionLog": [
+      {
+        "id": 1,
+        "agentId": 1,
+        "agentName": "Student Management Agent",
+        "userMessage": "Enroll Rahul in IT department for 2024",
+        "aiAction": "create_student",
+        "actionData": {
+          "name": "Rahul",
+          "department": "IT",
+          "year": 2024,
+          "gpa": 0
+        },
+        "result": true,
+        "timestamp": "2026-03-12T06:17:03.933Z"
+      },
+      {
+        "id": 2,
+        "agentId": 1,
+        "agentName": "Student Management Agent",
+        "userMessage": "List all students",
+        "aiAction": "list_students",
+        "actionData": {},
+        "result": true,
+        "timestamp": "2026-03-12T06:17:13.238Z"
+      },
+      {
+        "id": 3,
+        "agentId": 1,
+        "agentName": "Student Management Agent",
+        "userMessage": "List all students",
+        "aiAction": "list_students",
+        "actionData": {},
+        "result": true,
+        "timestamp": "2026-03-12T06:18:46.118Z"
+      },
+      {
+        "id": 4,
+        "agentId": 1,
+        "agentName": "Student Management Agent",
+        "userMessage": "Enroll Rahul in IT department for 2024",
+        "aiAction": "create_student",
+        "actionData": {
+          "name": "Rahul",
+          "department": "IT",
+          "year": 2024,
+          "gpa": 0
+        },
+        "result": true,
+        "timestamp": "2026-03-12T06:19:07.147Z"
+      },
+      {
+        "id": 7,
+        "agentId": 1,
+        "agentName": "Student Management Agent",
+        "userMessage": "List all students",
+        "aiAction": "list_students",
+        "actionData": {},
+        "result": true,
+        "timestamp": "2026-03-12T07:24:07.892Z"
+      },
+      {
+        "id": 8,
+        "agentId": 1,
+        "agentName": "Student Management Agent",
+        "userMessage": "Show students in CSE",
+        "aiAction": "list_students",
+        "actionData": {},
+        "result": true,
+        "timestamp": "2026-03-12T07:46:40.885Z"
+      },
+      {
+        "id": 9,
+        "agentId": 1,
+        "agentName": "Student Management Agent",
+        "userMessage": "List all students",
+        "aiAction": "list_students",
+        "actionData": {},
+        "result": true,
+        "timestamp": "2026-03-12T07:51:45.946Z"
+      },
+      {
+        "id": 11,
+        "agentId": 1,
+        "agentName": "Student Management Agent",
+        "userMessage": "Show students in CSE",
+        "aiAction": "list_students",
+        "actionData": {},
+        "result": true,
+        "timestamp": "2026-03-12T07:56:10.992Z"
+      },
+      {
+        "id": 13,
+        "agentId": 1,
+        "agentName": "Student Management Agent",
+        "userMessage": "List all students",
+        "aiAction": "list_students",
+        "actionData": {},
+        "result": true,
+        "timestamp": "2026-03-12T07:58:13.673Z"
+      },
+      {
+        "id": 14,
+        "agentId": 1,
+        "agentName": "Student Management Agent",
+        "userMessage": "List all students",
+        "aiAction": "list_students",
+        "actionData": {},
+        "result": true,
+        "timestamp": "2026-03-12T08:14:27.277Z"
+      },
+      {
+        "id": 15,
+        "agentId": 1,
+        "agentName": "Student Management Agent",
+        "userMessage": "List all students",
+        "aiAction": "list_students",
+        "actionData": {},
+        "result": true,
+        "timestamp": "2026-03-12T08:23:50.664Z"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Faculty Management Agent",
+    "domain": "faculty",
+    "description": "Manages faculty records, subject assignments, and workload tracking.",
+    "purpose": "Manage faculty records, subject assignments, and workload",
+    "allowedActions": [
+      "add_faculty",
+      "list_faculty",
+      "delete_faculty",
+      "assign_subject",
+      "generate_workload"
+    ],
+    "systemPrompt": "You are a Faculty Management AI Agent responsible for managing faculty records.\nYou can add faculty, assign subjects, generate workload reports, and list faculty.\nYou must convert user requests into structured JSON actions.\n\nAllowed actions: add_faculty, list_faculty, delete_faculty, assign_subject, generate_workload\n\nFor each user query, return ONLY a JSON object with:\n{\n  \"action\": \"<action_name>\",\n  \"data\": { ...relevant fields... }\n}\n\nFields for faculty: name, department, subjects, email\nFor assign_subject: faculty (name), subject (name)\nDo NOT include any text outside the JSON.",
+    "createdAt": "2026-03-12T06:19:41.796Z",
+    "chatHistory": [
+      {
+        "user": "Show faculty workload",
+        "ai": "Here are the current faculty members.",
+        "action": "list_faculty",
+        "timestamp": "2026-03-12T06:20:01.659Z"
+      },
+      {
+        "user": "List all faculty",
+        "ai": "Here are the current faculty members.",
+        "action": "list_faculty",
+        "timestamp": "2026-03-12T07:19:43.417Z"
+      }
+    ],
+    "actionLog": [
+      {
+        "id": 5,
+        "agentId": 2,
+        "agentName": "Faculty Management Agent",
+        "userMessage": "Show faculty workload",
+        "aiAction": "list_faculty",
+        "actionData": {},
+        "result": true,
+        "timestamp": "2026-03-12T06:20:01.658Z"
+      },
+      {
+        "id": 6,
+        "agentId": 2,
+        "agentName": "Faculty Management Agent",
+        "userMessage": "List all faculty",
+        "aiAction": "list_faculty",
+        "actionData": {},
+        "result": true,
+        "timestamp": "2026-03-12T07:19:43.409Z"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Student Management Agent",
+    "domain": "students",
+    "description": "Handles student enrollment, updates, deletions, and student reports.",
+    "purpose": "Track and report student attendance across courses",
+    "allowedActions": [
+      "create_student",
+      "update_student",
+      "delete_student",
+      "list_students"
+    ],
+    "systemPrompt": "You are a Student Management AI Agent responsible for managing student records.\nYou can enroll students, update their information, delete records, and generate reports.\nYou must convert user requests into structured JSON actions.\n\nAllowed actions: create_student, update_student, delete_student, list_students\n\nFor each user query, return ONLY a JSON object with:\n{\n  \"action\": \"<action_name>\",\n  \"data\": { ...relevant fields... }\n}\n\nFields for students: name, department, year, gpa, email\nDo NOT include any text outside the JSON.",
+    "createdAt": "2026-03-12T06:21:48.620Z",
+    "chatHistory": [],
+    "actionLog": []
+  },
+  {
+    "id": 4,
+    "name": "Exam Management Agent",
+    "domain": "exams",
+    "description": "Manages exam scheduling, listings, and exam-related operations.",
+    "purpose": "Schedule and manage examinations and assessments",
+    "allowedActions": [
+      "schedule_exam",
+      "list_exams"
+    ],
+    "systemPrompt": "You are an Exam Management AI Agent responsible for scheduling and managing exams.\nYou can schedule exams and list upcoming exams.\nYou must convert user requests into structured JSON actions.\n\nAllowed actions: schedule_exam, list_exams\n\nFor each user query, return ONLY a JSON object with:\n{\n  \"action\": \"<action_name>\",\n  \"data\": { ...relevant fields... }\n}\n\nFields: course, date, type (midterm/final/quiz)\nDo NOT include any text outside the JSON.",
+    "createdAt": "2026-03-12T07:52:51.083Z",
+    "chatHistory": [
+      {
+        "user": "Schedule exam for Data Structures on April 20",
+        "ai": "I'll schedule the exam.",
+        "action": "schedule_exam",
+        "timestamp": "2026-03-12T07:52:59.823Z"
+      }
+    ],
+    "actionLog": [
+      {
+        "id": 10,
+        "agentId": 4,
+        "agentName": "Exam Management Agent",
+        "userMessage": "Schedule exam for Data Structures on April 20",
+        "aiAction": "schedule_exam",
+        "actionData": {
+          "course": "Data Structures",
+          "date": "April 20",
+          "type": "midterm"
+        },
+        "result": true,
+        "timestamp": "2026-03-12T07:52:59.817Z"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Student Management Agent",
+    "domain": "students",
+    "description": "Handles student enrollment, updates, deletions, and student reports.",
+    "purpose": "notice and announcement agent",
+    "allowedActions": [
+      "create_student",
+      "update_student",
+      "delete_student",
+      "list_students"
+    ],
+    "systemPrompt": "You are a Student Management AI Agent responsible for managing student records.\nYou can enroll students, update their information, delete records, and generate reports.\nYou must convert user requests into structured JSON actions.\n\nAllowed actions: create_student, update_student, delete_student, list_students\n\nFor each user query, return ONLY a JSON object with:\n{\n  \"action\": \"<action_name>\",\n  \"data\": { ...relevant fields... }\n}\n\nFields for students: name, department, year, gpa, email\nDo NOT include any text outside the JSON.",
+    "createdAt": "2026-03-12T08:01:35.878Z",
+    "chatHistory": [],
+    "actionLog": []
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "Rahul Sharma",
+    "department": "IT",
+    "year": 2024,
+    "gpa": 8.3,
+    "email": "rahul.sharma@university.edu",
+    "enrolledAt": "2024-01-15"
+  },
+  {
+    "id": 2,
+    "name": "Priya Patel",
+    "department": "CSE",
+    "year": 2023,
+    "gpa": 9.1,
+    "email": "priya.patel@university.edu",
+    "enrolledAt": "2023-07-01"
+  },
+  {
+    "id": 3,
+    "name": "Amit Kumar",
+    "department": "ECE",
+    "year": 2024,
+    "gpa": 7.5,
+    "email": "amit.kumar@university.edu",
+    "enrolledAt": "2024-01-15"
+  },
+  {
+    "id": 4,
+    "name": "Rahul",
+    "department": "IT",
+    "year": 2024,
+    "gpa": 0,
+    "email": "rahul@university.edu",
+    "enrolledAt": "2026-03-12"
+  },
+  {
+    "id": 5,
+    "name": "Rahul",
+    "department": "IT",
+    "year": 2024,
+    "gpa": 0,
+    "email": "rahul@university.edu",
+    "enrolledAt": "2026-03-12"
+  }
+]

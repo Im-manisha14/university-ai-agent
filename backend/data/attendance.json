@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "studentId": 1,
+    "studentName": "Rahul Sharma",
+    "courseCode": "CS201",
+    "date": "2024-03-01",
+    "status": "present"
+  },
+  {
+    "id": 2,
+    "studentId": 2,
+    "studentName": "Priya Patel",
+    "courseCode": "CS201",
+    "date": "2024-03-01",
+    "status": "present"
+  },
+  {
+    "id": 3,
+    "studentId": 3,
+    "studentName": "Amit Kumar",
+    "courseCode": "EC201",
+    "date": "2024-03-01",
+    "status": "absent"
+  }
+]

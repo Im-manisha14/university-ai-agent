@@ -1,0 +1,388 @@
+// ─── ChatBox ─────────────────────────────────────────────────
+// Professional chat interface — minimal, readable, productivity-tool style
+// ─────────────────────────────────────────────────────────────
+
+import React, { useState, useRef, useEffect } from "react";
+import { sendMessage } from "../services/api";
+
+// ─── DataTable ───────────────────────────────────────────────
+// Renders an array-of-objects as a sortable, scrollable table
+// ─────────────────────────────────────────────────────────────
+function DataTable({ data }) {
+  const [sortCol, setSortCol] = useState(null);
+  const [sortDir, setSortDir] = useState("asc");
+
+  if (!data || data.length === 0) return null;
+
+  const HIDDEN = ["systemPrompt", "chatHistory", "actionLog"];
+  const columns = Object.keys(data[0]).filter((k) => !HIDDEN.includes(k));
+
+  const sorted = [...data].sort((a, b) => {
+    if (!sortCol) return 0;
+    const av = a[sortCol] ?? "";
+    const bv = b[sortCol] ?? "";
+    const isNum = typeof av === "number" || (typeof av === "string" && !isNaN(av));
+    const cmp = isNum ? Number(av) - Number(bv) : String(av).localeCompare(String(bv));
+    return sortDir === "asc" ? cmp : -cmp;
+  });
+
+  function toggleSort(col) {
+    if (sortCol === col) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortCol(col);
+      setSortDir("asc");
+    }
+  }
+
+  function downloadCSV() {
+    const escape = (v) => {
+      const s = v == null ? "" : Array.isArray(v) ? v.join(", ") : String(v);
+      return s.includes(",") || s.includes('"') || s.includes("\n")
+        ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+    const rows = [columns.join(","), ...sorted.map((r) => columns.map((c) => escape(r[c])).join(","))];
+    const blob = new Blob([rows.join("\n")], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "data.csv"; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  const tdStyle = {
+    padding: "7px 12px",
+    borderBottom: "1px solid var(--color-border)",
+    fontSize: "0.8rem",
+    color: "var(--color-text-2)",
+    whiteSpace: "nowrap",
+  };
+  const thStyle = {
+    ...tdStyle,
+    background: "var(--color-surface)",
+    color: "var(--color-text-1)",
+    fontWeight: 600,
+    cursor: "pointer",
+    userSelect: "none",
+    position: "sticky",
+    top: 0,
+    zIndex: 1,
+  };
+
+  return (
+    <div style={{ marginTop: 10 }}>
+      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
+        <button
+          onClick={downloadCSV}
+          style={{
+            padding: "3px 10px",
+            fontSize: "0.7rem",
+            background: "var(--color-surface)",
+            border: "1px solid var(--color-border)",
+            borderRadius: 4,
+            cursor: "pointer",
+            color: "var(--color-text-3)",
+          }}
+        >
+          Download CSV
+        </button>
+      </div>
+      <div style={{ overflowX: "auto", maxHeight: 360, border: "1px solid var(--color-border)", borderRadius: 6 }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "auto" }}>
+          <thead>
+            <tr>
+              {columns.map((col) => (
+                <th key={col} style={thStyle} onClick={() => toggleSort(col)}>
+                  {col.replace(/_/g, " ")}
+                  {sortCol === col ? (sortDir === "asc" ? " ▲" : " ▼") : ""}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((row, i) => (
+              <tr key={i} style={{ background: i % 2 === 0 ? "transparent" : "rgba(0,0,0,0.02)" }}>
+                {columns.map((col) => {
+                  const val = row[col];
+                  const display = val == null ? "—" : Array.isArray(val) ? (val.length ? val.join(", ") : "—") : String(val);
+                  return <td key={col} style={tdStyle}>{display}</td>;
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div style={{ marginTop: 4, fontSize: "0.7rem", color: "var(--color-text-3)" }}>
+        {sorted.length} record{sorted.length !== 1 ? "s" : ""}
+      </div>
+    </div>
+  );
+}
+
+export default function ChatBox({ agent }) {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const bottomRef = useRef(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Initial greeting
+  useEffect(() => {
+    setMessages([
+      {
+        role: "ai",
+        text: `Hello. I'm the **${agent.name}** — ${agent.description}\n\nI can assist with: ${agent.allowedActions.map((a) => a.replace(/_/g, " ")).join(", ")}.`,
+        ts: new Date(),
+      },
+    ]);
+  }, [agent]);
+
+  async function handleSend() {
+    const text = input.trim();
+    if (!text || loading) return;
+
+    setMessages((p) => [...p, { role: "user", text, ts: new Date() }]);
+    setInput("");
+    setLoading(true);
+
+    try {
+      const res = await sendMessage(agent.id, text);
+      const { response, action, actionResult, aiRawAction } = res.data.data;
+
+      const body = response || actionResult?.message || "";
+      const tableData =
+        actionResult?.data &&
+        Array.isArray(actionResult.data) &&
+        actionResult.data.length > 0
+          ? actionResult.data
+          : null;
+
+      setMessages((p) => [
+        ...p,
+        {
+          role: "ai",
+          text: body,
+          tableData,
+          action,
+          success: actionResult?.success,
+          ts: new Date(),
+        },
+      ]);
+    } catch {
+      setMessages((p) => [
+        ...p,
+        {
+          role: "ai",
+          text: "Could not reach the server. Please ensure the backend is running on port 5000.",
+          isError: true,
+          ts: new Date(),
+        },
+      ]);
+    } finally {
+      setLoading(false);
+      inputRef.current?.focus();
+    }
+  }
+
+  function onKeyDown(e) {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); }
+  }
+
+  const suggestions = getSuggestions(agent.domain);
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      {/* Message list */}
+      <div style={{ flex: 1, overflowY: "auto", padding: "20px 24px", display: "flex", flexDirection: "column", gap: 16 }}>
+        {messages.map((msg, i) => (
+          <div
+            key={i}
+            className="animate-in"
+            style={{
+              display: "flex",
+              flexDirection: msg.role === "user" ? "row-reverse" : "row",
+              alignItems: "flex-end",
+              gap: 8,
+            }}
+          >
+            {/* Avatar */}
+            <div
+              style={{
+                width: 26, height: 26, borderRadius: "50%",
+                background: msg.role === "user" ? "var(--color-accent)" : "#f3f4f6",
+                border: "1px solid var(--color-border)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 10, fontWeight: 700,
+                color: msg.role === "user" ? "#fff" : "var(--color-text-3)",
+                flexShrink: 0,
+              }}
+            >
+              {msg.role === "user" ? "U" : "AI"}
+            </div>
+
+            {/* Bubble */}
+            <div style={{ maxWidth: 560 }}>
+              <div className={msg.role === "user" ? "chat-bubble-user" : (msg.isError ? "chat-bubble-ai" : "chat-bubble-ai")}
+                style={msg.isError ? { borderColor: "var(--color-danger)", color: "var(--color-danger)" } : {}}>
+                {renderText(msg.text)}
+              </div>
+
+              {/* Structured data table */}
+              {msg.tableData && <DataTable data={msg.tableData} />}
+
+              {/* Action tag */}
+              {msg.action && (
+                <div style={{ marginTop: 5, display: "flex", alignItems: "center", gap: 6 }}>
+                  <span className="chat-action-pill">
+                    {msg.action.replace(/_/g, " ")}
+                  </span>
+                  {msg.success === true && (
+                    <span style={{ fontSize: "0.6875rem", color: "var(--color-success)", fontWeight: 500 }}>
+                      Success
+                    </span>
+                  )}
+                  {msg.success === false && (
+                    <span style={{ fontSize: "0.6875rem", color: "var(--color-danger)", fontWeight: 500 }}>
+                      Failed
+                    </span>
+                  )}
+                </div>
+              )}
+
+              {/* Timestamp */}
+              <div className="text-caption" style={{ marginTop: 3, textAlign: msg.role === "user" ? "right" : "left" }}>
+                {fmt(msg.ts)}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Typing indicator */}
+        {loading && (
+          <div style={{ display: "flex", alignItems: "flex-end", gap: 8 }}>
+            <div style={{ width: 26, height: 26, borderRadius: "50%", background: "#f3f4f6", border: "1px solid var(--color-border)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: "var(--color-text-3)" }}>AI</div>
+            <div className="chat-bubble-ai" style={{ padding: "10px 14px" }}>
+              <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+                <span className="typing-dot" />
+                <span className="typing-dot" />
+                <span className="typing-dot" />
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div ref={bottomRef} />
+      </div>
+
+      {/* Suggestion chips — visible only initially */}
+      {messages.length <= 1 && (
+        <div style={{ padding: "0 24px 12px" }}>
+          <p className="text-caption" style={{ marginBottom: 7 }}>Suggested queries:</p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+            {suggestions.map((s, i) => (
+              <button
+                key={i}
+                onClick={() => setInput(s)}
+                style={{
+                  padding: "4px 11px",
+                  background: "var(--color-surface)",
+                  border: "1px solid var(--color-border)",
+                  borderRadius: 5,
+                  fontSize: "0.75rem",
+                  color: "var(--color-text-3)",
+                  cursor: "pointer",
+                  transition: "all 0.1s",
+                }}
+                onMouseEnter={e => { e.target.style.borderColor = "var(--color-accent)"; e.target.style.color = "var(--color-accent)"; }}
+                onMouseLeave={e => { e.target.style.borderColor = "var(--color-border)"; e.target.style.color = "var(--color-text-3)"; }}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Input bar */}
+      <div style={{
+        borderTop: "1px solid var(--color-border)",
+        padding: "14px 20px",
+        background: "var(--color-surface)",
+        display: "flex", gap: 10, alignItems: "flex-end",
+      }}>
+        <textarea
+          ref={inputRef}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={onKeyDown}
+          placeholder={`Message ${agent.name}…`}
+          rows={1}
+          className="form-input"
+          style={{ resize: "none", minHeight: 38, maxHeight: 100, lineHeight: 1.5, paddingTop: 8, paddingBottom: 8 }}
+        />
+        <button
+          className="btn btn-primary"
+          onClick={handleSend}
+          disabled={loading || !input.trim()}
+          style={{ flexShrink: 0, height: 38 }}
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── Helpers ─────────────────────────────────────────────────
+
+function fmt(date) {
+  if (!date) return "";
+  return new Date(date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+function renderText(text) {
+  if (!text) return null;
+  return text.split(/(\*\*.*?\*\*)/g).map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return <strong key={i} style={{ fontWeight: 600 }}>{part.slice(2, -2)}</strong>;
+    }
+    return <span key={i} style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
+  });
+}
+
+function formatResult(data) {
+  if (!data) return "";
+  if (Array.isArray(data)) {
+    if (data.length === 0) return "No records found.";
+    return data.map((item, i) => {
+      const lines = Object.entries(item)
+        .filter(([k]) => !["systemPrompt", "chatHistory", "actionLog"].includes(k))
+        .map(([k, v]) => `  ${k}: ${Array.isArray(v) ? (v.length ? v.join(", ") : "—") : (v ?? "—")}`)
+        .join("\n");
+      return `Record ${i + 1}:\n${lines}`;
+    }).join("\n\n");
+  }
+  if (typeof data === "object") {
+    return Object.entries(data)
+      .filter(([k]) => !["systemPrompt", "chatHistory", "actionLog"].includes(k))
+      .map(([k, v]) => `${k}: ${Array.isArray(v) ? (v.length ? v.join(", ") : "—") : (v ?? "—")}`)
+      .join("\n");
+  }
+  return String(data);
+}
+
+function getSuggestions(domain) {
+  const m = {
+    students:   ["List all students", "Enroll Rahul in IT for 2024", "Show students in CSE", "Delete student Amit"],
+    faculty:    ["List all faculty", "Add Prof. Singh to CSE", "Assign Machine Learning to Prof. Kumar", "Show faculty workload"],
+    courses:    ["List all courses", "Add course Web Dev for semester 5", "Delete course Data Structures"],
+    attendance: ["List attendance records", "Mark Rahul present for CS201", "Show students below 75% attendance"],
+    exams:      ["List upcoming exams", "Schedule exam for Data Structures on April 20"],
+  };
+  return m[domain] || ["List all records", "Generate summary report"];
+}
+
+

@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Prof. Kumar",
+    "department": "CSE",
+    "subjects": ["Data Structures", "Algorithms"],
+    "email": "kumar@university.edu"
+  },
+  {
+    "id": 2,
+    "name": "Prof. Meena",
+    "department": "IT",
+    "subjects": ["Database Systems", "Web Development"],
+    "email": "meena@university.edu"
+  },
+  {
+    "id": 3,
+    "name": "Prof. Rao",
+    "department": "ECE",
+    "subjects": ["Digital Electronics", "Signal Processing"],
+    "email": "rao@university.edu"
+  }
+]
