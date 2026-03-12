@@ -20,7 +20,7 @@ export default function AgentCard({ agent, onDelete }) {
   return (
     <tr>
       {/* Agent name + description */}
-      <td style={{ minWidth: 200 }}>
+      <td>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div
             style={{

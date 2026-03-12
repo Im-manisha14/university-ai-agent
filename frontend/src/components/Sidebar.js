@@ -4,6 +4,7 @@
 
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const NAV = [
   {
@@ -20,13 +21,30 @@ const NAV = [
       { to: "/create", label: "New Agent", icon: <PlusIcon /> },
     ],
   },
+  {
+    section: "Account",
+    items: [
+      { to: "/profile", label: "My Profile", icon: <ProfileIcon /> },
+    ],
+  },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }) {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  function handleLogout() {
+    logout();
+    navigate("/login");
+    if (onClose) onClose();
+  }
+
+  const initials = user
+    ? user.name.split(" ").map(w => w[0]).slice(0, 2).join("").toUpperCase()
+    : "?";
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar${isOpen ? " sidebar-open" : ""}`}>
       {/* Logo */}
       <div className="sidebar-logo">
         <div className="sidebar-logo-mark">ZN</div>
@@ -48,6 +66,7 @@ export default function Sidebar() {
                 className={({ isActive }) =>
                   `nav-item${isActive ? " active" : ""}`
                 }
+                onClick={onClose}
               >
                 <span className="nav-icon">{item.icon}</span>
                 {item.label}
@@ -57,12 +76,27 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Footer */}
+      {/* User info + Logout */}
       <div className="sidebar-footer">
-        <div style={{ fontWeight: 500, color: "var(--color-text-3)", marginBottom: 2 }}>
-          University Portal
+        {user && (
+          <div className="sidebar-user">
+            <div className={`sidebar-user-avatar ${user.role === "faculty" ? "faculty-avatar" : "student-avatar"}`}>
+              {initials}
+            </div>
+            <div className="sidebar-user-info">
+              <div className="sidebar-user-name">{user.name}</div>
+              <div className={`sidebar-user-role ${user.role === "faculty" ? "faculty-role" : "student-role"}`}>
+                {user.role === "faculty" ? "Faculty" : "Student"} · {user.department}
+              </div>
+            </div>
+          </div>
+        )}
+        <button className="sidebar-logout-btn" onClick={handleLogout} title="Sign out">
+          <LogoutIcon /> Sign Out
+        </button>
+        <div style={{ marginTop: "0.75rem", fontSize: "0.7rem", color: "var(--color-text-4)" }}>
+          University Portal · v1.0
         </div>
-        <div>v1.0 · Hackathon Build</div>
       </div>
     </aside>
   );
@@ -104,6 +138,25 @@ function PlusIcon() {
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg" style={{width:16,height:16}}>
       <line x1="8" y1="2.5" x2="8" y2="13.5" strokeLinecap="round" />
       <line x1="2.5" y1="8" x2="13.5" y2="8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function LogoutIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg" style={{width:14,height:14,marginRight:6}}>
+      <path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h3" strokeLinecap="round"/>
+      <polyline points="10.5,5 14,8 10.5,11" strokeLinecap="round" strokeLinejoin="round"/>
+      <line x1="14" y1="8" x2="6" y2="8" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function ProfileIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg" style={{width:16,height:16}}>
+      <circle cx="8" cy="5.5" r="2.5" />
+      <path d="M3 14c0-2.761 2.239-4.5 5-4.5s5 1.739 5 4.5" strokeLinecap="round" />
     </svg>
   );
 }

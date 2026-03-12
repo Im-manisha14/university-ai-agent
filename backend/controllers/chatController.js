@@ -6,6 +6,9 @@
 const { processQuery } = require("../services/aiService");
 const { executeAction } = require("../services/actionRouter");
 const { readData, writeData } = require("../services/dataService");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = process.env.JWT_SECRET || "zenai_jwt_secret_university_2026";
 
 // OpenAI API key from environment variables
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "your-gemini-api-key-here";
@@ -30,6 +33,15 @@ async function sendMessage(req, res) {
       return res.status(400).json({ success: false, message: "Message is required" });
     }
 
+    // Extract logged-in user from JWT (optional — works without auth too)
+    let currentUser = null;
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      try {
+        currentUser = jwt.verify(authHeader.split(" ")[1], JWT_SECRET);
+      } catch { /* token invalid — proceed without user context */ }
+    }
+
     // Step 1: Find the agent
     const agents = readData("agents.json");
     const agent = agents.find((a) => a.id === agentId);
@@ -37,25 +49,57 @@ async function sendMessage(req, res) {
       return res.status(404).json({ success: false, message: "Agent not found" });
     }
 
+    // Role guard — block faculty from using student agents and vice versa
+    if (currentUser && agent.role && agent.role !== currentUser.role) {
+      const agentRoleLabel = agent.role === "student" ? "Student" : "Faculty";
+      const userRoleLabel  = currentUser.role === "faculty" ? "Faculty" : "Student";
+      return res.json({
+        success: true,
+        data: {
+          response: `⚠️ This is a **${agentRoleLabel} Agent**. You are logged in as **${userRoleLabel}**. Please use the agents designed for ${userRoleLabel === "Faculty" ? "Faculty" : "Students"} — they have the right data for you!`,
+          action: null,
+          actionResult: null,
+        },
+      });
+    }
+
     // Step 2: Send to AI service (Gemini or mock)
-    const aiResult = await processQuery(agent.systemPrompt, message, GEMINI_API_KEY);
+    const liveContext = {
+      students: readData("students.json").map(s => ({ name: s.name, department: s.department })),
+      faculty:  readData("faculty.json").map(f => ({ name: f.name, department: f.department })),
+      courses:  readData("courses.json").map(c => ({ name: c.name, code: c.code })),
+    };
+    const aiResult = await processQuery(agent.systemPrompt, message, GEMINI_API_KEY, agent.allowedActions, liveContext, agent.id);
 
     let actionResult = null;
     let actionExecuted = null;
 
     // Step 3: If AI returned a structured action, validate and execute it
     if (aiResult.action && aiResult.action.action) {
-      const actionName = aiResult.action.action;
+      let actionName = aiResult.action.action;
+
+      // Action normalization — try to fix mismatched action names before rejecting
+      if (!agent.allowedActions.includes(actionName)) {
+        // Fuzzy match: find an allowed action containing the key topic
+        const topics = actionName.replace(/^(view_|list_|view_my_|get_|show_|check_)/, "").split("_");
+        const fuzzy = agent.allowedActions.find(a => topics.some(t => a.includes(t)));
+        if (fuzzy) {
+          console.log(`[Action Normalizer] "${actionName}" → "${fuzzy}"`);
+          actionName = fuzzy;
+          aiResult.action.action = fuzzy;
+        }
+      }
 
       // Domain restriction check — agent can only execute its allowed actions
       if (agent.allowedActions.includes(actionName)) {
-        // Step 4: Execute via action router
-        actionResult = executeAction(actionName, aiResult.action.data || {});
+        // Step 4: Execute via action router, pass current user for "my" data queries
+        actionResult = executeAction(actionName, aiResult.action.data || {}, currentUser);
         actionExecuted = actionName;
       } else {
+        // Instead of hard error, return a helpful redirect
         actionResult = {
           success: false,
-          message: `Action "${actionName}" is not allowed for this agent. Allowed actions: ${agent.allowedActions.join(", ")}`,
+          message: `That looks like a different domain! 🎯 This agent handles: ${agent.allowedActions.map(a => a.replace(/_/g, " ")).join(", ")}. Try asking about one of those topics!`,
           data: null,
         };
       }

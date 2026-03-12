@@ -1,13 +1,13 @@
-// ─── ChatBox ─────────────────────────────────────────────────
-// Professional chat interface — minimal, readable, productivity-tool style
-// ─────────────────────────────────────────────────────────────
+﻿// ΓöÇΓöÇΓöÇ ChatBox ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+// Professional chat interface ΓÇö minimal, readable, productivity-tool style
+// ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 
 import React, { useState, useRef, useEffect } from "react";
 import { sendMessage } from "../services/api";
 
-// ─── DataTable ───────────────────────────────────────────────
+// ΓöÇΓöÇΓöÇ DataTable ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 // Renders an array-of-objects as a sortable, scrollable table
-// ─────────────────────────────────────────────────────────────
+// ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 function DataTable({ data }) {
   const [sortCol, setSortCol] = useState(null);
   const [sortDir, setSortDir] = useState("asc");
@@ -50,11 +50,14 @@ function DataTable({ data }) {
   }
 
   const tdStyle = {
-    padding: "7px 12px",
+    padding: "9px 12px",
     borderBottom: "1px solid var(--color-border)",
-    fontSize: "0.8rem",
+    fontSize: "0.85rem",
     color: "var(--color-text-2)",
-    whiteSpace: "nowrap",
+    whiteSpace: "normal",
+    wordBreak: "break-word",
+    verticalAlign: "middle",
+    textAlign: "left",
   };
   const thStyle = {
     ...tdStyle,
@@ -66,6 +69,8 @@ function DataTable({ data }) {
     position: "sticky",
     top: 0,
     zIndex: 1,
+    fontSize: "0.75rem",
+    whiteSpace: "nowrap",
   };
 
   return (
@@ -74,8 +79,8 @@ function DataTable({ data }) {
         <button
           onClick={downloadCSV}
           style={{
-            padding: "3px 10px",
-            fontSize: "0.7rem",
+            padding: "5px 14px",
+            fontSize: "0.85rem",
             background: "var(--color-surface)",
             border: "1px solid var(--color-border)",
             borderRadius: 4,
@@ -86,14 +91,14 @@ function DataTable({ data }) {
           Download CSV
         </button>
       </div>
-      <div style={{ overflowX: "auto", maxHeight: 360, border: "1px solid var(--color-border)", borderRadius: 6 }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", tableLayout: "auto" }}>
+      <div style={{ overflowX: "auto", maxHeight: 560, border: "1px solid var(--color-border)", borderRadius: 6, WebkitOverflowScrolling: "touch" }}>
+        <table style={{ width: "100%", minWidth: 400, borderCollapse: "collapse" }}>
           <thead>
             <tr>
               {columns.map((col) => (
                 <th key={col} style={thStyle} onClick={() => toggleSort(col)}>
                   {col.replace(/_/g, " ")}
-                  {sortCol === col ? (sortDir === "asc" ? " ▲" : " ▼") : ""}
+                  {sortCol === col ? (sortDir === "asc" ? " Γû▓" : " Γû╝") : ""}
                 </th>
               ))}
             </tr>
@@ -103,7 +108,7 @@ function DataTable({ data }) {
               <tr key={i} style={{ background: i % 2 === 0 ? "transparent" : "rgba(0,0,0,0.02)" }}>
                 {columns.map((col) => {
                   const val = row[col];
-                  const display = val == null ? "—" : Array.isArray(val) ? (val.length ? val.join(", ") : "—") : String(val);
+                  const display = val == null ? "ΓÇö" : Array.isArray(val) ? (val.length ? val.join(", ") : "ΓÇö") : String(val);
                   return <td key={col} style={tdStyle}>{display}</td>;
                 })}
               </tr>
@@ -111,7 +116,7 @@ function DataTable({ data }) {
           </tbody>
         </table>
       </div>
-      <div style={{ marginTop: 4, fontSize: "0.7rem", color: "var(--color-text-3)" }}>
+      <div style={{ marginTop: 6, fontSize: "0.85rem", color: "var(--color-text-3)" }}>
         {sorted.length} record{sorted.length !== 1 ? "s" : ""}
       </div>
     </div>
@@ -196,7 +201,7 @@ export default function ChatBox({ agent }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {/* Message list */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "20px 24px", display: "flex", flexDirection: "column", gap: 16 }}>
+      <div className="chat-msg-list">
         {messages.map((msg, i) => (
           <div
             key={i}
@@ -224,7 +229,7 @@ export default function ChatBox({ agent }) {
             </div>
 
             {/* Bubble */}
-            <div style={{ maxWidth: 560 }}>
+            <div className={`chat-bubble-outer${msg.tableData ? ' has-table' : ''}`}>
               <div className={msg.role === "user" ? "chat-bubble-user" : (msg.isError ? "chat-bubble-ai" : "chat-bubble-ai")}
                 style={msg.isError ? { borderColor: "var(--color-danger)", color: "var(--color-danger)" } : {}}>
                 {renderText(msg.text)}
@@ -277,9 +282,9 @@ export default function ChatBox({ agent }) {
         <div ref={bottomRef} />
       </div>
 
-      {/* Suggestion chips — visible only initially */}
+      {/* Suggestion chips ΓÇö visible only initially */}
       {messages.length <= 1 && (
-        <div style={{ padding: "0 24px 12px" }}>
+        <div className="chat-suggestions">
           <p className="text-caption" style={{ marginBottom: 7 }}>Suggested queries:</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
             {suggestions.map((s, i) => (
@@ -307,18 +312,13 @@ export default function ChatBox({ agent }) {
       )}
 
       {/* Input bar */}
-      <div style={{
-        borderTop: "1px solid var(--color-border)",
-        padding: "14px 20px",
-        background: "var(--color-surface)",
-        display: "flex", gap: 10, alignItems: "flex-end",
-      }}>
+      <div className="chat-input-bar">
         <textarea
           ref={inputRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={onKeyDown}
-          placeholder={`Message ${agent.name}…`}
+          placeholder={`Message ${agent.name}ΓÇª`}
           rows={1}
           className="form-input"
           style={{ resize: "none", minHeight: 38, maxHeight: 100, lineHeight: 1.5, paddingTop: 8, paddingBottom: 8 }}
@@ -336,7 +336,7 @@ export default function ChatBox({ agent }) {
   );
 }
 
-// ─── Helpers ─────────────────────────────────────────────────
+// ΓöÇΓöÇΓöÇ Helpers ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 
 function fmt(date) {
   if (!date) return "";
@@ -360,7 +360,7 @@ function formatResult(data) {
     return data.map((item, i) => {
       const lines = Object.entries(item)
         .filter(([k]) => !["systemPrompt", "chatHistory", "actionLog"].includes(k))
-        .map(([k, v]) => `  ${k}: ${Array.isArray(v) ? (v.length ? v.join(", ") : "—") : (v ?? "—")}`)
+        .map(([k, v]) => `  ${k}: ${Array.isArray(v) ? (v.length ? v.join(", ") : "ΓÇö") : (v ?? "ΓÇö")}`)
         .join("\n");
       return `Record ${i + 1}:\n${lines}`;
     }).join("\n\n");
@@ -368,7 +368,7 @@ function formatResult(data) {
   if (typeof data === "object") {
     return Object.entries(data)
       .filter(([k]) => !["systemPrompt", "chatHistory", "actionLog"].includes(k))
-      .map(([k, v]) => `${k}: ${Array.isArray(v) ? (v.length ? v.join(", ") : "—") : (v ?? "—")}`)
+      .map(([k, v]) => `${k}: ${Array.isArray(v) ? (v.length ? v.join(", ") : "ΓÇö") : (v ?? "ΓÇö")}`)
       .join("\n");
   }
   return String(data);

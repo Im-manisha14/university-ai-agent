@@ -131,11 +131,16 @@ function detectDomain(purpose) {
 // --- Controller Methods ---
 
 /**
- * GET /api/agents — Return all agents
+ * GET /api/agents — Return all agents, optionally filtered by role query param
+ * Usage: GET /api/agents?role=student  or  GET /api/agents?role=faculty
  */
 function getAllAgents(req, res) {
   const agents = readData("agents.json");
-  res.json({ success: true, data: agents });
+  const roleFilter = req.query.role;
+  const filtered = roleFilter
+    ? agents.filter(a => a.role === roleFilter)
+    : agents;
+  res.json({ success: true, data: filtered });
 }
 
 /**
@@ -162,9 +167,12 @@ function createAgent(req, res) {
   const agents = readData("agents.json");
   const newId = agents.length > 0 ? Math.max(...agents.map((a) => a.id)) + 1 : 1;
 
+  const userRole = req.user?.role || "student";
+
   const newAgent = {
     id: newId,
     name: template.name,
+    role: userRole,
     domain: template.domain,
     description: template.description,
     purpose: purpose,

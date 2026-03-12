@@ -4,7 +4,8 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAgents, deleteAgent, getStats } from "../services/api";
+import { getAgents, getStats } from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 const DOMAIN_LABEL = {
   students: "Student Mgmt",
@@ -12,6 +13,17 @@ const DOMAIN_LABEL = {
   courses: "Course Mgmt",
   attendance: "Attendance",
   exams: "Exams",
+  academics: "Academic Advisory",
+  results: "Results & Grades",
+  timetable: "Timetable & Exams",
+  profile: "Profile Mgmt",
+  notices: "Notice Board",
+  class_management: "Class Mgmt",
+  attendance_mgmt: "Attendance Mgmt",
+  marks: "Marks Entry",
+  schedule: "Schedule Mgmt",
+  analytics: "Analytics",
+  faculty_profile: "Faculty Profile",
 };
 
 export default function Dashboard() {
@@ -20,10 +32,12 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState(null);
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const role = user?.role || "";
 
   const fetchData = useCallback(async () => {
     try {
-      const [agentsRes, statsRes] = await Promise.all([getAgents(), getStats()]);
+      const [agentsRes, statsRes] = await Promise.all([getAgents(role), getStats()]);
       setAgents(agentsRes.data.data);
       setStats(statsRes.data.data);
     } catch {
@@ -31,24 +45,13 @@ export default function Dashboard() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [role]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
   function showToast(msg, type = "info") {
     setToast({ msg, type });
     setTimeout(() => setToast(null), 3000);
-  }
-
-  async function handleDelete(id, name) {
-    if (!window.confirm(`Remove agent "${name}"?`)) return;
-    try {
-      await deleteAgent(id);
-      setAgents((prev) => prev.filter((a) => a.id !== id));
-      showToast(`Agent "${name}" removed.`);
-    } catch {
-      showToast("Failed to delete agent.", "error");
-    }
   }
 
   const metrics = stats
@@ -66,22 +69,26 @@ export default function Dashboard() {
       {/* Welcome */}
       <div style={{ marginBottom: 28 }}>
         <h1 className="text-heading" style={{marginBottom:4}}>
-          University AI Operations
+          {role === "faculty" ? "Faculty Dashboard" : role === "student" ? "Student Dashboard" : "University AI Operations"}
         </h1>
         <p className="text-body" style={{color:"var(--color-text-3)"}}>
-          Manage your AI agents and monitor institutional data from one place.
+          {role === "faculty"
+            ? `Welcome, ${user?.name || "Faculty"}. Manage your classes, marks, and schedules.`
+            : role === "student"
+            ? `Welcome, ${user?.name || "Student"}. Track your academics, attendance, and results.`
+            : "Manage your AI agents and monitor institutional data from one place."}
         </p>
       </div>
 
       {/* Metrics */}
       {loading ? (
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:14, marginBottom:32 }}>
+        <div className="metrics-grid" style={{ marginBottom:32 }}>
           {[...Array(5)].map((_,i) => (
             <div key={i} className="metric-card" style={{height:80, background:"#f3f4f6"}} />
           ))}
         </div>
       ) : (
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(5,1fr)", gap:14, marginBottom:32 }}>
+        <div className="metrics-grid" style={{ marginBottom:32 }}>
           {metrics.map((m) => (
             <div key={m.label} className="metric-card">
               <div className="metric-value">{m.value}</div>
@@ -92,17 +99,14 @@ export default function Dashboard() {
       )}
 
       {/* Agents table */}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, alignItems:"start" }}>
+      <div className="grid-2-col" style={{ alignItems:"start" }}>
         {/* Left: Agents */}
         <section>
-          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:14 }}>
+          <div className="section-header" style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:14 }}>
             <h2 className="text-subheading" style={{fontSize:"0.9375rem"}}>Configured Agents</h2>
             <div style={{display:"flex",gap:8}}>
               <button className="btn btn-secondary btn-sm" onClick={() => navigate("/agents")}>
                 View all
-              </button>
-              <button className="btn btn-primary btn-sm" onClick={() => navigate("/create")}>
-                + New Agent
               </button>
             </div>
           </div>
@@ -121,7 +125,9 @@ export default function Dashboard() {
               </button>
             </div>
           ) : (
-            <div className="card" style={{overflow:"hidden"}}>
+            <>
+            {/* Desktop table */}
+            <div className="card table-responsive agents-table-desktop" style={{overflow:"hidden"}}>
               <table className="data-table">
                 <thead>
                   <tr>
@@ -132,7 +138,7 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {agents.slice(0, 6).map((agent) => (
+                  {agents.map((agent) => (
                     <tr key={agent.id}>
                       <td>
                         <span style={{fontWeight:500,color:"var(--color-text-1)"}}>
@@ -162,13 +168,6 @@ export default function Dashboard() {
                           >
                             Chat
                           </button>
-                          <button
-                            className="btn btn-danger-ghost btn-sm"
-                            onClick={() => handleDelete(agent.id, agent.name)}
-                            title="Delete"
-                          >
-                            ✕
-                          </button>
                         </div>
                       </td>
                     </tr>
@@ -176,6 +175,40 @@ export default function Dashboard() {
                 </tbody>
               </table>
             </div>
+
+            {/* Mobile card view */}
+            <div className="agents-cards-mobile">
+              {agents.map((agent) => (
+                <div key={agent.id} className="card agent-mobile-card">
+                  <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:10 }}>
+                    <div style={{
+                      width:32, height:32, borderRadius:7,
+                      background:"var(--color-accent-lt)",
+                      display:"flex", alignItems:"center", justifyContent:"center",
+                      fontSize:11, fontWeight:700, color:"var(--color-accent)", flexShrink:0,
+                    }}>
+                      {agent.name.substring(0,2).toUpperCase()}
+                    </div>
+                    <div style={{ flex:1, minWidth:0 }}>
+                      <div style={{ fontWeight:600, fontSize:"0.875rem", color:"var(--color-text-1)" }}>
+                        {agent.name}
+                      </div>
+                      <span className="badge badge-indigo" style={{ marginTop:2, display:"inline-flex" }}>
+                        {DOMAIN_LABEL[agent.domain] || agent.domain}
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    style={{ width:"100%", justifyContent:"center" }}
+                    onClick={() => navigate(`/chat/${agent.id}`)}
+                  >
+                    Chat
+                  </button>
+                </div>
+              ))}
+            </div>
+            </>
           )}
         </section>
 
@@ -194,11 +227,7 @@ export default function Dashboard() {
                 {stats.recentLogs.slice(0, 7).map((log) => (
                   <div
                     key={log.id}
-                    style={{
-                      display:"flex", alignItems:"flex-start", gap:12,
-                      padding:"11px 16px",
-                      borderBottom:"1px solid var(--color-border)",
-                    }}
+                    className="activity-log-item"
                   >
                     <div
                       style={{

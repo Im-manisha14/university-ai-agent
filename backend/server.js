@@ -17,9 +17,17 @@ const cors = require("cors");
 const path = require("path");
 
 // Route imports
-const agentRoutes = require("./routes/agentRoutes");
-const chatRoutes = require("./routes/chatRoutes");
-const dataRoutes = require("./routes/dataRoutes");
+const agentRoutes     = require("./routes/agentRoutes");
+const chatRoutes      = require("./routes/chatRoutes");
+const dataRoutes      = require("./routes/dataRoutes");
+const authRoutes      = require("./routes/authRoutes");
+const alertRoutes     = require("./routes/alertRoutes");
+const analyticsRoutes = require("./routes/analyticsRoutes");
+const profileRoutes   = require("./routes/profileRoutes");
+const exportRoutes    = require("./routes/exportRoutes");
+
+// Alert scheduler
+const { startAlertScheduler } = require("./services/alertService");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -35,9 +43,14 @@ app.use((req, res, next) => {
 });
 
 // ---- API Routes ----
-app.use("/api/agents", agentRoutes);
-app.use("/api/chat", chatRoutes);
-app.use("/api/data", dataRoutes);
+app.use("/api/auth",      authRoutes);
+app.use("/api/agents",    agentRoutes);
+app.use("/api/chat",      chatRoutes);
+app.use("/api/data",      dataRoutes);
+app.use("/api/alerts",    alertRoutes);
+app.use("/api/analytics", analyticsRoutes);
+app.use("/api/profile",   profileRoutes);
+app.use("/api/export",    exportRoutes);
 
 // ---- Health Check ----
 app.get("/api/health", (req, res) => {
@@ -50,20 +63,26 @@ app.get("/api/health", (req, res) => {
 
 // ---- Start Server ----
 app.listen(PORT, () => {
+  // Start the proactive alert scheduler (checks every 30s)
+  startAlertScheduler(30000);
+
   console.log(`
 ╔══════════════════════════════════════════════════════════╗
 ║   ZENAI — AI Agent Platform for University Management   ║
 ║   Server running on http://localhost:${PORT}               ║
 ║                                                          ║
 ║   API Endpoints:                                         ║
-║     GET    /api/health             Health check           ║
-║     GET    /api/agents             List all agents        ║
-║     POST   /api/agents             Create agent           ║
-║     DELETE  /api/agents/:id         Delete agent           ║
-║     POST   /api/chat/:agentId      Send message           ║
-║     GET    /api/chat/:agentId/history  Chat history       ║
-║     GET    /api/data/stats         Dashboard stats        ║
-║     GET    /api/data/logs          Action logs            ║
+║     GET    /api/health               Health check         ║
+║     GET    /api/agents               List all agents      ║
+║     POST   /api/agents               Create agent         ║
+║     POST   /api/chat/:agentId        Send message         ║
+║     GET    /api/alerts               User alerts          ║
+║     GET    /api/analytics/student/*  Student analytics    ║
+║     GET    /api/analytics/faculty/*  Faculty analytics    ║
+║     GET    /api/profile/student      Student profile      ║
+║     PUT    /api/profile/student      Update profile       ║
+║     POST   /api/export/pdf           Export PDF           ║
+║     POST   /api/export/excel         Export Excel         ║
 ╚══════════════════════════════════════════════════════════╝
   `);
 });

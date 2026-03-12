@@ -1,336 +1,1343 @@
 [
-  {
-    "id": 1,
-    "name": "Student Management Agent",
-    "domain": "students",
-    "description": "Handles student enrollment, updates, deletions, and student reports.",
-    "purpose": "Manage student records",
-    "allowedActions": [
-      "create_student",
-      "update_student",
-      "delete_student",
-      "list_students"
-    ],
-    "systemPrompt": "You are a Student Management AI Agent responsible for managing student records.\nYou can enroll students, update their information, delete records, and generate reports.\nYou must convert user requests into structured JSON actions.\n\nAllowed actions: create_student, update_student, delete_student, list_students\n\nFor each user query, return ONLY a JSON object with:\n{\n  \"action\": \"<action_name>\",\n  \"data\": { ...relevant fields... }\n}\n\nFields for students: name, department, year, gpa, email\nDo NOT include any text outside the JSON.",
-    "createdAt": "2026-03-12T06:16:54.478Z",
-    "chatHistory": [
-      {
-        "user": "Enroll Rahul in IT department for 2024",
-        "ai": "I'll enroll Rahul right away.",
-        "action": "create_student",
-        "timestamp": "2026-03-12T06:17:03.933Z"
-      },
-      {
-        "user": "List all students",
-        "ai": "Here are the current student records.",
-        "action": "list_students",
-        "timestamp": "2026-03-12T06:17:13.238Z"
-      },
-      {
-        "user": "List all students",
-        "ai": "Here are the current student records.",
-        "action": "list_students",
-        "timestamp": "2026-03-12T06:18:46.120Z"
-      },
-      {
-        "user": "Enroll Rahul in IT department for 2024",
-        "ai": "I'll enroll Rahul right away.",
-        "action": "create_student",
-        "timestamp": "2026-03-12T06:19:07.148Z"
-      },
-      {
-        "user": "List all students",
-        "ai": "Here are the current student records.",
-        "action": "list_students",
-        "timestamp": "2026-03-12T07:24:07.896Z"
-      },
-      {
-        "user": "Show students in CSE",
-        "ai": "Here are the current student records.",
-        "action": "list_students",
-        "timestamp": "2026-03-12T07:46:40.888Z"
-      },
-      {
-        "user": "List all students",
-        "ai": "Here are the current student records.",
-        "action": "list_students",
-        "timestamp": "2026-03-12T07:51:45.951Z"
-      },
-      {
-        "user": "Show students in CSE",
-        "ai": "Here are the current student records.",
-        "action": "list_students",
-        "timestamp": "2026-03-12T07:56:10.997Z"
-      },
-      {
-        "user": "REMOVE HARSHINI IN CSE A",
-        "ai": "I understand your request. Could you be more specific? I can help with operations like:\n• Enrolling/listing/updating/deleting students\n• Adding/listing faculty and assigning subjects\n• Creating/listing courses\n• Recording/reporting attendance\n• Scheduling exams\n• Generating reports",
-        "action": null,
-        "timestamp": "2026-03-12T07:56:50.788Z"
-      },
-      {
-        "user": "List all students",
-        "ai": "Here are the current student records.",
-        "action": "list_students",
-        "timestamp": "2026-03-12T07:58:13.675Z"
-      },
-      {
-        "user": "List all students",
-        "ai": "Here are the current student records.",
-        "action": "list_students",
-        "timestamp": "2026-03-12T08:14:27.278Z"
-      },
-      {
-        "user": "List all students",
-        "ai": "Here are the current student records.",
-        "action": "list_students",
-        "timestamp": "2026-03-12T08:23:50.665Z"
-      }
-    ],
-    "actionLog": [
-      {
-        "id": 1,
-        "agentId": 1,
-        "agentName": "Student Management Agent",
-        "userMessage": "Enroll Rahul in IT department for 2024",
-        "aiAction": "create_student",
-        "actionData": {
-          "name": "Rahul",
-          "department": "IT",
-          "year": 2024,
-          "gpa": 0
-        },
-        "result": true,
-        "timestamp": "2026-03-12T06:17:03.933Z"
-      },
-      {
-        "id": 2,
-        "agentId": 1,
-        "agentName": "Student Management Agent",
-        "userMessage": "List all students",
-        "aiAction": "list_students",
-        "actionData": {},
-        "result": true,
-        "timestamp": "2026-03-12T06:17:13.238Z"
-      },
-      {
-        "id": 3,
-        "agentId": 1,
-        "agentName": "Student Management Agent",
-        "userMessage": "List all students",
-        "aiAction": "list_students",
-        "actionData": {},
-        "result": true,
-        "timestamp": "2026-03-12T06:18:46.118Z"
-      },
-      {
-        "id": 4,
-        "agentId": 1,
-        "agentName": "Student Management Agent",
-        "userMessage": "Enroll Rahul in IT department for 2024",
-        "aiAction": "create_student",
-        "actionData": {
-          "name": "Rahul",
-          "department": "IT",
-          "year": 2024,
-          "gpa": 0
-        },
-        "result": true,
-        "timestamp": "2026-03-12T06:19:07.147Z"
-      },
-      {
-        "id": 7,
-        "agentId": 1,
-        "agentName": "Student Management Agent",
-        "userMessage": "List all students",
-        "aiAction": "list_students",
-        "actionData": {},
-        "result": true,
-        "timestamp": "2026-03-12T07:24:07.892Z"
-      },
-      {
-        "id": 8,
-        "agentId": 1,
-        "agentName": "Student Management Agent",
-        "userMessage": "Show students in CSE",
-        "aiAction": "list_students",
-        "actionData": {},
-        "result": true,
-        "timestamp": "2026-03-12T07:46:40.885Z"
-      },
-      {
-        "id": 9,
-        "agentId": 1,
-        "agentName": "Student Management Agent",
-        "userMessage": "List all students",
-        "aiAction": "list_students",
-        "actionData": {},
-        "result": true,
-        "timestamp": "2026-03-12T07:51:45.946Z"
-      },
-      {
-        "id": 11,
-        "agentId": 1,
-        "agentName": "Student Management Agent",
-        "userMessage": "Show students in CSE",
-        "aiAction": "list_students",
-        "actionData": {},
-        "result": true,
-        "timestamp": "2026-03-12T07:56:10.992Z"
-      },
-      {
-        "id": 13,
-        "agentId": 1,
-        "agentName": "Student Management Agent",
-        "userMessage": "List all students",
-        "aiAction": "list_students",
-        "actionData": {},
-        "result": true,
-        "timestamp": "2026-03-12T07:58:13.673Z"
-      },
-      {
-        "id": 14,
-        "agentId": 1,
-        "agentName": "Student Management Agent",
-        "userMessage": "List all students",
-        "aiAction": "list_students",
-        "actionData": {},
-        "result": true,
-        "timestamp": "2026-03-12T08:14:27.277Z"
-      },
-      {
-        "id": 15,
-        "agentId": 1,
-        "agentName": "Student Management Agent",
-        "userMessage": "List all students",
-        "aiAction": "list_students",
-        "actionData": {},
-        "result": true,
-        "timestamp": "2026-03-12T08:23:50.664Z"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "name": "Faculty Management Agent",
-    "domain": "faculty",
-    "description": "Manages faculty records, subject assignments, and workload tracking.",
-    "purpose": "Manage faculty records, subject assignments, and workload",
-    "allowedActions": [
-      "add_faculty",
-      "list_faculty",
-      "delete_faculty",
-      "assign_subject",
-      "generate_workload"
-    ],
-    "systemPrompt": "You are a Faculty Management AI Agent responsible for managing faculty records.\nYou can add faculty, assign subjects, generate workload reports, and list faculty.\nYou must convert user requests into structured JSON actions.\n\nAllowed actions: add_faculty, list_faculty, delete_faculty, assign_subject, generate_workload\n\nFor each user query, return ONLY a JSON object with:\n{\n  \"action\": \"<action_name>\",\n  \"data\": { ...relevant fields... }\n}\n\nFields for faculty: name, department, subjects, email\nFor assign_subject: faculty (name), subject (name)\nDo NOT include any text outside the JSON.",
-    "createdAt": "2026-03-12T06:19:41.796Z",
-    "chatHistory": [
-      {
-        "user": "Show faculty workload",
-        "ai": "Here are the current faculty members.",
-        "action": "list_faculty",
-        "timestamp": "2026-03-12T06:20:01.659Z"
-      },
-      {
-        "user": "List all faculty",
-        "ai": "Here are the current faculty members.",
-        "action": "list_faculty",
-        "timestamp": "2026-03-12T07:19:43.417Z"
-      }
-    ],
-    "actionLog": [
-      {
-        "id": 5,
-        "agentId": 2,
-        "agentName": "Faculty Management Agent",
-        "userMessage": "Show faculty workload",
-        "aiAction": "list_faculty",
-        "actionData": {},
-        "result": true,
-        "timestamp": "2026-03-12T06:20:01.658Z"
-      },
-      {
-        "id": 6,
-        "agentId": 2,
-        "agentName": "Faculty Management Agent",
-        "userMessage": "List all faculty",
-        "aiAction": "list_faculty",
-        "actionData": {},
-        "result": true,
-        "timestamp": "2026-03-12T07:19:43.409Z"
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "name": "Student Management Agent",
-    "domain": "students",
-    "description": "Handles student enrollment, updates, deletions, and student reports.",
-    "purpose": "Track and report student attendance across courses",
-    "allowedActions": [
-      "create_student",
-      "update_student",
-      "delete_student",
-      "list_students"
-    ],
-    "systemPrompt": "You are a Student Management AI Agent responsible for managing student records.\nYou can enroll students, update their information, delete records, and generate reports.\nYou must convert user requests into structured JSON actions.\n\nAllowed actions: create_student, update_student, delete_student, list_students\n\nFor each user query, return ONLY a JSON object with:\n{\n  \"action\": \"<action_name>\",\n  \"data\": { ...relevant fields... }\n}\n\nFields for students: name, department, year, gpa, email\nDo NOT include any text outside the JSON.",
-    "createdAt": "2026-03-12T06:21:48.620Z",
-    "chatHistory": [],
-    "actionLog": []
-  },
-  {
-    "id": 4,
-    "name": "Exam Management Agent",
-    "domain": "exams",
-    "description": "Manages exam scheduling, listings, and exam-related operations.",
-    "purpose": "Schedule and manage examinations and assessments",
-    "allowedActions": [
-      "schedule_exam",
-      "list_exams"
-    ],
-    "systemPrompt": "You are an Exam Management AI Agent responsible for scheduling and managing exams.\nYou can schedule exams and list upcoming exams.\nYou must convert user requests into structured JSON actions.\n\nAllowed actions: schedule_exam, list_exams\n\nFor each user query, return ONLY a JSON object with:\n{\n  \"action\": \"<action_name>\",\n  \"data\": { ...relevant fields... }\n}\n\nFields: course, date, type (midterm/final/quiz)\nDo NOT include any text outside the JSON.",
-    "createdAt": "2026-03-12T07:52:51.083Z",
-    "chatHistory": [
-      {
-        "user": "Schedule exam for Data Structures on April 20",
-        "ai": "I'll schedule the exam.",
-        "action": "schedule_exam",
-        "timestamp": "2026-03-12T07:52:59.823Z"
-      }
-    ],
-    "actionLog": [
-      {
-        "id": 10,
-        "agentId": 4,
-        "agentName": "Exam Management Agent",
-        "userMessage": "Schedule exam for Data Structures on April 20",
-        "aiAction": "schedule_exam",
-        "actionData": {
-          "course": "Data Structures",
-          "date": "April 20",
-          "type": "midterm"
-        },
-        "result": true,
-        "timestamp": "2026-03-12T07:52:59.817Z"
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "name": "Student Management Agent",
-    "domain": "students",
-    "description": "Handles student enrollment, updates, deletions, and student reports.",
-    "purpose": "notice and announcement agent",
-    "allowedActions": [
-      "create_student",
-      "update_student",
-      "delete_student",
-      "list_students"
-    ],
-    "systemPrompt": "You are a Student Management AI Agent responsible for managing student records.\nYou can enroll students, update their information, delete records, and generate reports.\nYou must convert user requests into structured JSON actions.\n\nAllowed actions: create_student, update_student, delete_student, list_students\n\nFor each user query, return ONLY a JSON object with:\n{\n  \"action\": \"<action_name>\",\n  \"data\": { ...relevant fields... }\n}\n\nFields for students: name, department, year, gpa, email\nDo NOT include any text outside the JSON.",
-    "createdAt": "2026-03-12T08:01:35.878Z",
-    "chatHistory": [],
-    "actionLog": []
-  }
+    {
+        "id":  1,
+        "name":  "Academic Advisor",
+        "role":  "student",
+        "domain":  "academics",
+        "description":  "View your enrolled courses, GPA, subjects, semester details, and course information.",
+        "purpose":  "Student academic information assistant",
+        "allowedActions":  [
+                               "view_my_courses",
+                               "view_my_gpa",
+                               "view_course_details",
+                               "list_courses"
+                           ],
+        "systemPrompt":  "You are the Academic Advisor Agent for university students.",
+        "createdAt":  "2026-01-01T00:00:00.000Z",
+        "chatHistory":  [
+                            {
+                                "user":  "my courses",
+                                "ai":  "Here are your enrolled courses.",
+                                "action":  "view_my_courses",
+                                "timestamp":  "2026-03-12T12:37:24.111Z"
+                            },
+                            {
+                                "user":  "what is my gpa",
+                                "ai":  "Here is your current GPA.",
+                                "action":  "view_my_gpa",
+                                "timestamp":  "2026-03-12T12:37:53.210Z"
+                            },
+                            {
+                                "user":  "delete student Rahul",
+                                "ai":  "Removing student \"Rahul Sharma\" from records.",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T12:43:15.029Z"
+                            },
+                            {
+                                "user":  "hi",
+                                "ai":  "Here are the current student records.",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T12:48:49.082Z"
+                            },
+                            {
+                                "user":  "hi",
+                                "ai":  "Hello! I can assist with: my courses, my gpa, course details, courses. How can I help you today?",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T12:57:26.614Z"
+                            },
+                            {
+                                "user":  "course",
+                                "ai":  "Here are the available courses.",
+                                "action":  "list_courses",
+                                "timestamp":  "2026-03-12T12:57:35.514Z"
+                            },
+                            {
+                                "user":  "result",
+                                "ai":  "I\u0027m not sure what you mean. I can help with: view my courses, view my gpa, view course details, list courses. Please try again!",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T12:57:56.682Z"
+                            },
+                            {
+                                "user":  "hi",
+                                "ai":  "Hello! I can assist with: my courses, my gpa, course details, courses. How can I help you today?",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T12:59:30.765Z"
+                            },
+                            {
+                                "user":  "hello",
+                                "ai":  "Hello! I can assist with: my courses, my gpa, course details, courses. How can I help you today?",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T12:59:31.488Z"
+                            },
+                            {
+                                "user":  "help",
+                                "ai":  "Hello! I can assist with: my courses, my gpa, course details, courses. How can I help you today?",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T12:59:31.912Z"
+                            },
+                            {
+                                "user":  "thanks",
+                                "ai":  "You\u0027re welcome! Let me know if you need anything else.",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T12:59:32.469Z"
+                            },
+                            {
+                                "user":  "asdfghjkl",
+                                "ai":  "I\u0027m not sure what you mean. I can help with: view my courses, view my gpa, view course details, list courses. Please try again!",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T12:59:32.854Z"
+                            },
+                            {
+                                "user":  "hi",
+                                "ai":  "Hello! I can assist with: my courses, my gpa, course details, courses. How can I help you today?",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T12:59:49.356Z"
+                            },
+                            {
+                                "user":  "view gpa",
+                                "ai":  "Here are the available courses.",
+                                "action":  "list_courses",
+                                "timestamp":  "2026-03-12T13:00:48.346Z"
+                            },
+                            {
+                                "user":  "gpa",
+                                "ai":  "I\u0027m not sure what you mean. I can help with: view my courses, view my gpa, view course details, list courses. Please try again!",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T13:00:57.919Z"
+                            },
+                            {
+                                "user":  "view my gpa",
+                                "ai":  "Here is your current GPA.",
+                                "action":  "view_my_gpa",
+                                "timestamp":  "2026-03-12T13:01:04.793Z"
+                            },
+                            {
+                                "user":  "list courses",
+                                "ai":  "Here are the available courses.",
+                                "action":  "list_courses",
+                                "timestamp":  "2026-03-12T13:01:14.889Z"
+                            },
+                            {
+                                "user":  "hello",
+                                "ai":  "Hello! I can assist with: my courses, my gpa, course details, courses. How can I help you today?",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T13:03:34.527Z"
+                            },
+                            {
+                                "user":  "thanks",
+                                "ai":  "You\u0027re welcome! Let me know if you need anything else.",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T13:03:34.755Z"
+                            },
+                            {
+                                "user":  "how are you",
+                                "ai":  "I\u0027m your AI assistant! I can assist with: my courses, my gpa, course details, courses.",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T13:03:35.049Z"
+                            },
+                            {
+                                "user":  "xyzabc",
+                                "ai":  "I\u0027m not sure what you mean. I can help with: view my courses, view my gpa, view course details, list courses. Please try again!",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T13:03:35.298Z"
+                            },
+                            {
+                                "user":  "my courses",
+                                "ai":  "Here are your enrolled courses.",
+                                "action":  "view_my_courses",
+                                "timestamp":  "2026-03-12T13:03:35.529Z"
+                            },
+                            {
+                                "user":  "show my gpa",
+                                "ai":  "Here is your current GPA.",
+                                "action":  "view_my_gpa",
+                                "timestamp":  "2026-03-12T13:03:35.804Z"
+                            },
+                            {
+                                "user":  "hi",
+                                "ai":  "Hello! 👋 Welcome to ZenAi!\nI am your **Academic Advisor** 📚\n\nI can help you with:\n📚 Your GPA and CGPA\n📖 Your enrolled courses and subjects\n📊 Course details and information\n🎓 Available courses list\n\nWhat would you like to know today?",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T14:38:56.261Z"
+                            },
+                            {
+                                "user":  "gpa",
+                                "ai":  "Here is your current GPA. 📊",
+                                "action":  "view_my_gpa",
+                                "timestamp":  "2026-03-12T14:39:16.468Z"
+                            },
+                            {
+                                "user":  "courses",
+                                "ai":  "Here are your enrolled courses. 📚",
+                                "action":  "view_my_courses",
+                                "timestamp":  "2026-03-12T14:39:16.650Z"
+                            },
+                            {
+                                "user":  "my attendance",
+                                "ai":  "I can see you\u0027re asking about attendance! 🎯 That is handled by your **Attendance Tracker (Agent 2)**. Please switch to that agent to get help with attendance.",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T14:39:16.833Z"
+                            },
+                            {
+                                "user":  "how am I doing",
+                                "ai":  "Here is your current GPA. 📊",
+                                "action":  "view_my_gpa",
+                                "timestamp":  "2026-03-12T16:54:38.051Z"
+                            },
+                            {
+                                "user":  "List all records",
+                                "ai":  "Here are your enrolled courses.",
+                                "action":  "view_my_courses",
+                                "timestamp":  "2026-03-12T17:15:11.327Z"
+                            }
+                        ],
+        "actionLog":  [
+                          {
+                              "id":  94,
+                              "agentId":  1,
+                              "agentName":  "Academic Advisor",
+                              "userMessage":  "my courses",
+                              "aiAction":  "view_my_courses",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T12:37:24.110Z"
+                          },
+                          {
+                              "id":  95,
+                              "agentId":  1,
+                              "agentName":  "Academic Advisor",
+                              "userMessage":  "what is my gpa",
+                              "aiAction":  "view_my_gpa",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T12:37:53.207Z"
+                          },
+                          {
+                              "id":  108,
+                              "agentId":  1,
+                              "agentName":  "Academic Advisor",
+                              "userMessage":  "course",
+                              "aiAction":  "list_courses",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T12:57:35.514Z"
+                          },
+                          {
+                              "id":  116,
+                              "agentId":  1,
+                              "agentName":  "Academic Advisor",
+                              "userMessage":  "view gpa",
+                              "aiAction":  "list_courses",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T13:00:48.345Z"
+                          },
+                          {
+                              "id":  118,
+                              "agentId":  1,
+                              "agentName":  "Academic Advisor",
+                              "userMessage":  "view my gpa",
+                              "aiAction":  "view_my_gpa",
+                              "actionData":  {
+
+                                             },
+                              "result":  false,
+                              "timestamp":  "2026-03-12T13:01:04.792Z"
+                          },
+                          {
+                              "id":  119,
+                              "agentId":  1,
+                              "agentName":  "Academic Advisor",
+                              "userMessage":  "list courses",
+                              "aiAction":  "list_courses",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T13:01:14.888Z"
+                          },
+                          {
+                              "id":  125,
+                              "agentId":  1,
+                              "agentName":  "Academic Advisor",
+                              "userMessage":  "my courses",
+                              "aiAction":  "view_my_courses",
+                              "actionData":  {
+
+                                             },
+                              "result":  false,
+                              "timestamp":  "2026-03-12T13:03:35.528Z"
+                          },
+                          {
+                              "id":  126,
+                              "agentId":  1,
+                              "agentName":  "Academic Advisor",
+                              "userMessage":  "show my gpa",
+                              "aiAction":  "view_my_gpa",
+                              "actionData":  {
+
+                                             },
+                              "result":  false,
+                              "timestamp":  "2026-03-12T13:03:35.802Z"
+                          },
+                          {
+                              "id":  128,
+                              "agentId":  1,
+                              "agentName":  "Academic Advisor",
+                              "userMessage":  "gpa",
+                              "aiAction":  "view_my_gpa",
+                              "actionData":  {
+
+                                             },
+                              "result":  false,
+                              "timestamp":  "2026-03-12T14:39:16.467Z"
+                          },
+                          {
+                              "id":  129,
+                              "agentId":  1,
+                              "agentName":  "Academic Advisor",
+                              "userMessage":  "courses",
+                              "aiAction":  "view_my_courses",
+                              "actionData":  {
+
+                                             },
+                              "result":  false,
+                              "timestamp":  "2026-03-12T14:39:16.648Z"
+                          },
+                          {
+                              "id":  145,
+                              "agentId":  1,
+                              "agentName":  "Academic Advisor",
+                              "userMessage":  "how am I doing",
+                              "aiAction":  "view_my_gpa",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:54:38.050Z"
+                          },
+                          {
+                              "id":  162,
+                              "agentId":  1,
+                              "agentName":  "Academic Advisor",
+                              "userMessage":  "List all records",
+                              "aiAction":  "view_my_courses",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T17:15:11.326Z"
+                          }
+                      ]
+    },
+    {
+        "id":  2,
+        "name":  "Attendance Tracker",
+        "role":  "student",
+        "domain":  "attendance",
+        "description":  "View your attendance records, percentage, and courses below required threshold.",
+        "purpose":  "Student attendance tracking assistant",
+        "allowedActions":  [
+                               "view_my_attendance",
+                               "view_my_attendance_report"
+                           ],
+        "systemPrompt":  "You are the Attendance Tracker Agent for students.",
+        "createdAt":  "2026-01-01T00:00:00.000Z",
+        "chatHistory":  [
+                            {
+                                "user":  "show my attendance",
+                                "ai":  "Here is your attendance record.",
+                                "action":  "view_my_attendance",
+                                "timestamp":  "2026-03-12T12:37:53.223Z"
+                            },
+                            {
+                                "user":  "attendance report",
+                                "ai":  "Generating attendance report.",
+                                "action":  null,
+                                "timestamp":  "2026-03-12T13:01:30.018Z"
+                            },
+                            {
+                                "user":  "attendance",
+                                "ai":  "Here is your attendance record. 📊",
+                                "action":  "view_my_attendance",
+                                "timestamp":  "2026-03-12T14:39:16.985Z"
+                            },
+                            {
+                                "user":  "bunk",
+                                "ai":  "Here is your attendance report. ⚠️",
+                                "action":  "view_my_attendance_report",
+                                "timestamp":  "2026-03-12T14:39:17.157Z"
+                            },
+                            {
+                                "user":  "List attendance records",
+                                "ai":  "Here is your attendance record. 📊",
+                                "action":  "view_my_attendance",
+                                "timestamp":  "2026-03-12T15:15:19.325Z"
+                            },
+                            {
+                                "user":  "List attendance records",
+                                "ai":  "Here is your attendance record. 📊",
+                                "action":  "view_my_attendance",
+                                "timestamp":  "2026-03-12T15:17:50.987Z"
+                            },
+                            {
+                                "user":  "my attendance",
+                                "ai":  "Here is your attendance record. 📊",
+                                "action":  "view_my_attendance",
+                                "timestamp":  "2026-03-12T16:54:21.067Z"
+                            },
+                            {
+                                "user":  "my attendance",
+                                "ai":  "Here is your attendance record. 📊",
+                                "action":  "view_my_attendance",
+                                "timestamp":  "2026-03-12T16:56:40.169Z"
+                            },
+                            {
+                                "user":  "my attendance",
+                                "ai":  "Here is your attendance record. 📊",
+                                "action":  "view_my_attendance",
+                                "timestamp":  "2026-03-12T16:57:14.609Z"
+                            },
+                            {
+                                "user":  "my attendance",
+                                "ai":  "Here is your attendance record. 📊",
+                                "action":  "view_my_attendance",
+                                "timestamp":  "2026-03-12T16:57:56.314Z"
+                            },
+                            {
+                                "user":  "List attendance records",
+                                "ai":  "Here is your attendance record. 📊",
+                                "action":  "view_my_attendance",
+                                "timestamp":  "2026-03-12T17:00:13.642Z"
+                            },
+                            {
+                                "user":  "my attendance",
+                                "ai":  "Here is your attendance record. 📊",
+                                "action":  "view_my_attendance",
+                                "timestamp":  "2026-03-12T17:13:43.422Z"
+                            },
+                            {
+                                "user":  "attendance report",
+                                "ai":  "Here is your attendance report. ⚠️",
+                                "action":  "view_my_attendance_report",
+                                "timestamp":  "2026-03-12T17:16:09.134Z"
+                            },
+                            {
+                                "user":  "view my attendance report",
+                                "ai":  "Here is your attendance report. ⚠️",
+                                "action":  "view_my_attendance_report",
+                                "timestamp":  "2026-03-12T17:16:35.616Z"
+                            }
+                        ],
+        "actionLog":  [
+                          {
+                              "id":  96,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "show my attendance",
+                              "aiAction":  "view_my_attendance",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T12:37:53.222Z"
+                          },
+                          {
+                              "id":  131,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "attendance",
+                              "aiAction":  "view_my_attendance",
+                              "actionData":  {
+
+                                             },
+                              "result":  false,
+                              "timestamp":  "2026-03-12T14:39:16.984Z"
+                          },
+                          {
+                              "id":  132,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "bunk",
+                              "aiAction":  "view_my_attendance_report",
+                              "actionData":  {
+
+                                             },
+                              "result":  false,
+                              "timestamp":  "2026-03-12T14:39:17.156Z"
+                          },
+                          {
+                              "id":  138,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "List attendance records",
+                              "aiAction":  "view_my_attendance",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T15:15:19.324Z"
+                          },
+                          {
+                              "id":  139,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "List attendance records",
+                              "aiAction":  "view_my_attendance",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T15:17:50.986Z"
+                          },
+                          {
+                              "id":  143,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "my attendance",
+                              "aiAction":  "view_my_attendance",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:54:21.067Z"
+                          },
+                          {
+                              "id":  151,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "my attendance",
+                              "aiAction":  "view_my_attendance",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:56:40.168Z"
+                          },
+                          {
+                              "id":  154,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "my attendance",
+                              "aiAction":  "view_my_attendance",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:57:14.608Z"
+                          },
+                          {
+                              "id":  157,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "my attendance",
+                              "aiAction":  "view_my_attendance",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:57:56.313Z"
+                          },
+                          {
+                              "id":  159,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "List attendance records",
+                              "aiAction":  "view_my_attendance",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T17:00:13.640Z"
+                          },
+                          {
+                              "id":  160,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "my attendance",
+                              "aiAction":  "view_my_attendance",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T17:13:43.421Z"
+                          },
+                          {
+                              "id":  165,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "attendance report",
+                              "aiAction":  "view_my_attendance_report",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T17:16:09.132Z"
+                          },
+                          {
+                              "id":  166,
+                              "agentId":  2,
+                              "agentName":  "Attendance Tracker",
+                              "userMessage":  "view my attendance report",
+                              "aiAction":  "view_my_attendance_report",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T17:16:35.615Z"
+                          }
+                      ]
+    },
+    {
+        "id":  3,
+        "name":  "Results \u0026 Grades",
+        "role":  "student",
+        "domain":  "results",
+        "description":  "View your marks, grades, and results across all subjects and exam types.",
+        "purpose":  "Student results and marks viewer",
+        "allowedActions":  [
+                               "view_my_marks",
+                               "view_my_results"
+                           ],
+        "systemPrompt":  "You are the Results and Grades Agent for students.",
+        "createdAt":  "2026-01-01T00:00:00.000Z",
+        "chatHistory":  [
+                            {
+                                "user":  "my marks",
+                                "ai":  "Here are your marks.",
+                                "action":  "view_my_marks",
+                                "timestamp":  "2026-03-12T12:37:53.237Z"
+                            },
+                            {
+                                "user":  "marks",
+                                "ai":  "Here are your marks. 📝",
+                                "action":  "view_my_marks",
+                                "timestamp":  "2026-03-12T14:39:17.299Z"
+                            },
+                            {
+                                "user":  "result",
+                                "ai":  "Here are your results. 📝",
+                                "action":  "view_my_results",
+                                "timestamp":  "2026-03-12T14:39:17.492Z"
+                            },
+                            {
+                                "user":  "List all records",
+                                "ai":  "Here are your marks.",
+                                "action":  "view_my_marks",
+                                "timestamp":  "2026-03-12T15:30:19.354Z"
+                            },
+                            {
+                                "user":  "show my marks",
+                                "ai":  "Here are your marks. 📝",
+                                "action":  "view_my_marks",
+                                "timestamp":  "2026-03-12T16:53:52.732Z"
+                            },
+                            {
+                                "user":  "show my marks",
+                                "ai":  "Here are your marks. 📝",
+                                "action":  "view_my_marks",
+                                "timestamp":  "2026-03-12T16:54:07.227Z"
+                            },
+                            {
+                                "user":  "my marks",
+                                "ai":  "Here are your marks. 📝",
+                                "action":  "view_my_marks",
+                                "timestamp":  "2026-03-12T16:56:40.313Z"
+                            },
+                            {
+                                "user":  "my marks",
+                                "ai":  "Here are your marks. 📝",
+                                "action":  "view_my_marks",
+                                "timestamp":  "2026-03-12T16:57:14.769Z"
+                            },
+                            {
+                                "user":  "my marks",
+                                "ai":  "Here are your marks. 📝",
+                                "action":  "view_my_marks",
+                                "timestamp":  "2026-03-12T16:57:56.497Z"
+                            }
+                        ],
+        "actionLog":  [
+                          {
+                              "id":  97,
+                              "agentId":  3,
+                              "agentName":  "Results \u0026 Grades",
+                              "userMessage":  "my marks",
+                              "aiAction":  "view_my_marks",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T12:37:53.235Z"
+                          },
+                          {
+                              "id":  133,
+                              "agentId":  3,
+                              "agentName":  "Results \u0026 Grades",
+                              "userMessage":  "marks",
+                              "aiAction":  "view_my_marks",
+                              "actionData":  {
+
+                                             },
+                              "result":  false,
+                              "timestamp":  "2026-03-12T14:39:17.298Z"
+                          },
+                          {
+                              "id":  134,
+                              "agentId":  3,
+                              "agentName":  "Results \u0026 Grades",
+                              "userMessage":  "result",
+                              "aiAction":  "view_my_results",
+                              "actionData":  {
+
+                                             },
+                              "result":  false,
+                              "timestamp":  "2026-03-12T14:39:17.491Z"
+                          },
+                          {
+                              "id":  140,
+                              "agentId":  3,
+                              "agentName":  "Results \u0026 Grades",
+                              "userMessage":  "List all records",
+                              "aiAction":  "view_my_marks",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T15:30:19.353Z"
+                          },
+                          {
+                              "id":  141,
+                              "agentId":  3,
+                              "agentName":  "Results \u0026 Grades",
+                              "userMessage":  "show my marks",
+                              "aiAction":  "view_my_marks",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:53:52.730Z"
+                          },
+                          {
+                              "id":  142,
+                              "agentId":  3,
+                              "agentName":  "Results \u0026 Grades",
+                              "userMessage":  "show my marks",
+                              "aiAction":  "view_my_marks",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:54:07.226Z"
+                          },
+                          {
+                              "id":  152,
+                              "agentId":  3,
+                              "agentName":  "Results \u0026 Grades",
+                              "userMessage":  "my marks",
+                              "aiAction":  "view_my_marks",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:56:40.312Z"
+                          },
+                          {
+                              "id":  155,
+                              "agentId":  3,
+                              "agentName":  "Results \u0026 Grades",
+                              "userMessage":  "my marks",
+                              "aiAction":  "view_my_marks",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:57:14.768Z"
+                          },
+                          {
+                              "id":  158,
+                              "agentId":  3,
+                              "agentName":  "Results \u0026 Grades",
+                              "userMessage":  "my marks",
+                              "aiAction":  "view_my_marks",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:57:56.496Z"
+                          }
+                      ]
+    },
+    {
+        "id":  4,
+        "name":  "Timetable \u0026 Exams",
+        "role":  "student",
+        "domain":  "timetable",
+        "description":  "View your class timetable, exam schedule, and room information.",
+        "purpose":  "Student schedule and timetable viewer",
+        "allowedActions":  [
+                               "view_my_timetable",
+                               "view_exam_schedule",
+                               "list_exams"
+                           ],
+        "systemPrompt":  "You are the Timetable and Exams Agent for students.",
+        "createdAt":  "2026-01-01T00:00:00.000Z",
+        "chatHistory":  [
+                            {
+                                "user":  "my timetable",
+                                "ai":  "Here is your timetable.",
+                                "action":  "view_my_timetable",
+                                "timestamp":  "2026-03-12T12:42:55.367Z"
+                            },
+                            {
+                                "user":  "timetable",
+                                "ai":  "Here is your timetable. 📅",
+                                "action":  "view_my_timetable",
+                                "timestamp":  "2026-03-12T14:39:17.634Z"
+                            },
+                            {
+                                "user":  "show my exam schedule",
+                                "ai":  "Here is your timetable. 📅",
+                                "action":  "view_my_timetable",
+                                "timestamp":  "2026-03-12T16:54:37.902Z"
+                            },
+                            {
+                                "user":  "my schedule",
+                                "ai":  "Here is your timetable. 📅",
+                                "action":  "view_my_timetable",
+                                "timestamp":  "2026-03-12T16:56:40.474Z"
+                            },
+                            {
+                                "user":  "show my exams",
+                                "ai":  "Here is the exam schedule. 📝",
+                                "action":  "view_exam_schedule",
+                                "timestamp":  "2026-03-12T16:57:14.921Z"
+                            }
+                        ],
+        "actionLog":  [
+                          {
+                              "id":  103,
+                              "agentId":  4,
+                              "agentName":  "Timetable \u0026 Exams",
+                              "userMessage":  "my timetable",
+                              "aiAction":  "view_my_timetable",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T12:42:55.366Z"
+                          },
+                          {
+                              "id":  135,
+                              "agentId":  4,
+                              "agentName":  "Timetable \u0026 Exams",
+                              "userMessage":  "timetable",
+                              "aiAction":  "view_my_timetable",
+                              "actionData":  {
+
+                                             },
+                              "result":  false,
+                              "timestamp":  "2026-03-12T14:39:17.633Z"
+                          },
+                          {
+                              "id":  144,
+                              "agentId":  4,
+                              "agentName":  "Timetable \u0026 Exams",
+                              "userMessage":  "show my exam schedule",
+                              "aiAction":  "view_my_timetable",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:54:37.902Z"
+                          },
+                          {
+                              "id":  153,
+                              "agentId":  4,
+                              "agentName":  "Timetable \u0026 Exams",
+                              "userMessage":  "my schedule",
+                              "aiAction":  "view_my_timetable",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:56:40.473Z"
+                          },
+                          {
+                              "id":  156,
+                              "agentId":  4,
+                              "agentName":  "Timetable \u0026 Exams",
+                              "userMessage":  "show my exams",
+                              "aiAction":  "view_exam_schedule",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:57:14.921Z"
+                          }
+                      ]
+    },
+    {
+        "id":  5,
+        "name":  "Profile Manager",
+        "role":  "student",
+        "domain":  "profile",
+        "description":  "View and update your personal profile - phone number, email, and contact details.",
+        "purpose":  "Student profile management",
+        "allowedActions":  [
+                               "view_my_profile",
+                               "update_my_profile"
+                           ],
+        "systemPrompt":  "You are the Profile Manager Agent for students.",
+        "createdAt":  "2026-01-01T00:00:00.000Z",
+        "chatHistory":  [
+                            {
+                                "user":  "show my profile",
+                                "ai":  "Here is your profile.",
+                                "action":  "view_my_profile",
+                                "timestamp":  "2026-03-12T12:42:55.388Z"
+                            },
+                            {
+                                "user":  "profile",
+                                "ai":  "Here is your profile. 👤",
+                                "action":  "view_my_profile",
+                                "timestamp":  "2026-03-12T14:39:17.795Z"
+                            }
+                        ],
+        "actionLog":  [
+                          {
+                              "id":  104,
+                              "agentId":  5,
+                              "agentName":  "Profile Manager",
+                              "userMessage":  "show my profile",
+                              "aiAction":  "view_my_profile",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T12:42:55.387Z"
+                          },
+                          {
+                              "id":  136,
+                              "agentId":  5,
+                              "agentName":  "Profile Manager",
+                              "userMessage":  "profile",
+                              "aiAction":  "view_my_profile",
+                              "actionData":  {
+
+                                             },
+                              "result":  false,
+                              "timestamp":  "2026-03-12T14:39:17.794Z"
+                          }
+                      ]
+    },
+    {
+        "id":  6,
+        "name":  "Notice Board",
+        "role":  "student",
+        "domain":  "notices",
+        "description":  "View university notices, announcements, events, placement drives, and updates.",
+        "purpose":  "Student notice and events viewer",
+        "allowedActions":  [
+                               "view_notices"
+                           ],
+        "systemPrompt":  "You are the Notice Board Agent for students.",
+        "createdAt":  "2026-01-01T00:00:00.000Z",
+        "chatHistory":  [
+                            {
+                                "user":  "show notices",
+                                "ai":  "Here are the latest notices.",
+                                "action":  "view_notices",
+                                "timestamp":  "2026-03-12T12:37:53.251Z"
+                            },
+                            {
+                                "user":  "notices",
+                                "ai":  "Here are the latest notices. 📢",
+                                "action":  "view_notices",
+                                "timestamp":  "2026-03-12T14:39:17.954Z"
+                            },
+                            {
+                                "user":  "List all records",
+                                "ai":  "Here are the latest notices.",
+                                "action":  "view_notices",
+                                "timestamp":  "2026-03-12T17:15:34.639Z"
+                            },
+                            {
+                                "user":  "view notices",
+                                "ai":  "Here are the latest notices. 📢",
+                                "action":  "view_notices",
+                                "timestamp":  "2026-03-12T17:15:46.429Z"
+                            }
+                        ],
+        "actionLog":  [
+                          {
+                              "id":  98,
+                              "agentId":  6,
+                              "agentName":  "Notice Board",
+                              "userMessage":  "show notices",
+                              "aiAction":  "view_notices",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T12:37:53.250Z"
+                          },
+                          {
+                              "id":  137,
+                              "agentId":  6,
+                              "agentName":  "Notice Board",
+                              "userMessage":  "notices",
+                              "aiAction":  "view_notices",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T14:39:17.953Z"
+                          },
+                          {
+                              "id":  163,
+                              "agentId":  6,
+                              "agentName":  "Notice Board",
+                              "userMessage":  "List all records",
+                              "aiAction":  "view_notices",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T17:15:34.638Z"
+                          },
+                          {
+                              "id":  164,
+                              "agentId":  6,
+                              "agentName":  "Notice Board",
+                              "userMessage":  "view notices",
+                              "aiAction":  "view_notices",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T17:15:46.427Z"
+                          }
+                      ]
+    },
+    {
+        "id":  7,
+        "name":  "Class Manager",
+        "role":  "faculty",
+        "domain":  "class_management",
+        "description":  "Manage students and courses - add, update, delete, and list records.",
+        "purpose":  "Faculty class management system",
+        "allowedActions":  [
+                               "list_students",
+                               "create_student",
+                               "update_student",
+                               "delete_student",
+                               "list_courses",
+                               "create_course",
+                               "update_course",
+                               "delete_course"
+                           ],
+        "systemPrompt":  "You are the Class Manager Agent for faculty.",
+        "createdAt":  "2026-01-01T00:00:00.000Z",
+        "chatHistory":  [
+                            {
+                                "user":  "show all students",
+                                "ai":  "Here are the current student records.",
+                                "action":  "list_students",
+                                "timestamp":  "2026-03-12T12:40:12.378Z"
+                            }
+                        ],
+        "actionLog":  [
+                          {
+                              "id":  99,
+                              "agentId":  7,
+                              "agentName":  "Class Manager",
+                              "userMessage":  "show all students",
+                              "aiAction":  "list_students",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T12:40:12.377Z"
+                          }
+                      ]
+    },
+    {
+        "id":  8,
+        "name":  "Attendance Manager",
+        "role":  "faculty",
+        "domain":  "attendance_mgmt",
+        "description":  "Mark student attendance, view records, and generate attendance reports.",
+        "purpose":  "Faculty attendance management system",
+        "allowedActions":  [
+                               "record_attendance",
+                               "list_attendance",
+                               "attendance_report"
+                           ],
+        "systemPrompt":  "You are the Attendance Manager Agent for faculty.",
+        "createdAt":  "2026-01-01T00:00:00.000Z",
+        "chatHistory":  [
+                            {
+                                "user":  "show class attendance",
+                                "ai":  "Here are the attendance records. 📋",
+                                "action":  "list_attendance",
+                                "timestamp":  "2026-03-12T16:55:03.533Z"
+                            },
+                            {
+                                "user":  "show attendance",
+                                "ai":  "Here are the attendance records. 📋",
+                                "action":  "list_attendance",
+                                "timestamp":  "2026-03-12T17:14:01.049Z"
+                            }
+                        ],
+        "actionLog":  [
+                          {
+                              "id":  146,
+                              "agentId":  8,
+                              "agentName":  "Attendance Manager",
+                              "userMessage":  "show class attendance",
+                              "aiAction":  "list_attendance",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:55:03.532Z"
+                          },
+                          {
+                              "id":  161,
+                              "agentId":  8,
+                              "agentName":  "Attendance Manager",
+                              "userMessage":  "show attendance",
+                              "aiAction":  "list_attendance",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T17:14:01.048Z"
+                          }
+                      ]
+    },
+    {
+        "id":  9,
+        "name":  "Marks Entry",
+        "role":  "faculty",
+        "domain":  "marks",
+        "description":  "Enter, update, and view student marks for different exam types.",
+        "purpose":  "Faculty marks entry and viewing system",
+        "allowedActions":  [
+                               "enter_marks",
+                               "view_marks",
+                               "update_marks",
+                               "delete_marks"
+                           ],
+        "systemPrompt":  "You are the Marks Entry Agent for faculty.",
+        "createdAt":  "2026-01-01T00:00:00.000Z",
+        "chatHistory":  [
+                            {
+                                "user":  "enter marks for Priya CS201 midterm 85",
+                                "ai":  "Entering marks for \"Priya Patel\".",
+                                "action":  "enter_marks",
+                                "timestamp":  "2026-03-12T12:40:12.396Z"
+                            },
+                            {
+                                "user":  "enter marks for Priya CS201 midterm 85",
+                                "ai":  "Entering marks for \"Priya Patel\".",
+                                "action":  "enter_marks",
+                                "timestamp":  "2026-03-12T12:41:54.623Z"
+                            },
+                            {
+                                "user":  "show marks for my course",
+                                "ai":  "Here are the marks records. 📝",
+                                "action":  "view_marks",
+                                "timestamp":  "2026-03-12T16:55:03.747Z"
+                            },
+                            {
+                                "user":  "show marks for my course",
+                                "ai":  "Here are the marks records. 📝",
+                                "action":  "view_marks",
+                                "timestamp":  "2026-03-12T16:55:27.211Z"
+                            },
+                            {
+                                "user":  "show marks for CS201",
+                                "ai":  "Here are the marks records. 📝",
+                                "action":  "view_marks",
+                                "timestamp":  "2026-03-12T16:55:58.418Z"
+                            },
+                            {
+                                "user":  "show all marks",
+                                "ai":  "Here are the marks records. 📝",
+                                "action":  "view_marks",
+                                "timestamp":  "2026-03-12T16:56:12.160Z"
+                            }
+                        ],
+        "actionLog":  [
+                          {
+                              "id":  100,
+                              "agentId":  9,
+                              "agentName":  "Marks Entry",
+                              "userMessage":  "enter marks for Priya CS201 midterm 85",
+                              "aiAction":  "enter_marks",
+                              "actionData":  {
+                                                 "studentName":  "Priya Patel",
+                                                 "courseCode":  "CS201",
+                                                 "type":  "midterm",
+                                                 "maxMarks":  100
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T12:40:12.395Z"
+                          },
+                          {
+                              "id":  102,
+                              "agentId":  9,
+                              "agentName":  "Marks Entry",
+                              "userMessage":  "enter marks for Priya CS201 midterm 85",
+                              "aiAction":  "enter_marks",
+                              "actionData":  {
+                                                 "studentName":  "Priya Patel",
+                                                 "courseCode":  "CS201",
+                                                 "type":  "midterm",
+                                                 "marks":  85,
+                                                 "maxMarks":  100
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T12:41:54.622Z"
+                          },
+                          {
+                              "id":  147,
+                              "agentId":  9,
+                              "agentName":  "Marks Entry",
+                              "userMessage":  "show marks for my course",
+                              "aiAction":  "view_marks",
+                              "actionData":  {
+                                                 "studentName":  "my"
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:55:03.745Z"
+                          },
+                          {
+                              "id":  148,
+                              "agentId":  9,
+                              "agentName":  "Marks Entry",
+                              "userMessage":  "show marks for my course",
+                              "aiAction":  "view_marks",
+                              "actionData":  {
+                                                 "studentName":  "my"
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:55:27.210Z"
+                          },
+                          {
+                              "id":  149,
+                              "agentId":  9,
+                              "agentName":  "Marks Entry",
+                              "userMessage":  "show marks for CS201",
+                              "aiAction":  "view_marks",
+                              "actionData":  {
+                                                 "studentName":  "CS201",
+                                                 "courseCode":  "CS201"
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:55:58.417Z"
+                          },
+                          {
+                              "id":  150,
+                              "agentId":  9,
+                              "agentName":  "Marks Entry",
+                              "userMessage":  "show all marks",
+                              "aiAction":  "view_marks",
+                              "actionData":  {
+
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T16:56:12.158Z"
+                          }
+                      ]
+    },
+    {
+        "id":  10,
+        "name":  "Schedule Manager",
+        "role":  "faculty",
+        "domain":  "schedule",
+        "description":  "View teaching schedule, manage exam scheduling, and check room assignments.",
+        "purpose":  "Faculty schedule and exam management",
+        "allowedActions":  [
+                               "view_schedule",
+                               "schedule_exam",
+                               "list_exams"
+                           ],
+        "systemPrompt":  "You are the Schedule Manager Agent for faculty.",
+        "createdAt":  "2026-01-01T00:00:00.000Z",
+        "chatHistory":  [
+
+                        ],
+        "actionLog":  [
+
+                      ]
+    },
+    {
+        "id":  11,
+        "name":  "Analytics Dashboard",
+        "role":  "faculty",
+        "domain":  "analytics",
+        "description":  "View department analytics - student stats, attendance trends, marks distribution, workload.",
+        "purpose":  "Faculty analytics and reporting",
+        "allowedActions":  [
+                               "generate_report",
+                               "generate_workload",
+                               "attendance_report",
+                               "view_marks_analytics"
+                           ],
+        "systemPrompt":  "You are the Analytics Dashboard Agent for faculty.",
+        "createdAt":  "2026-01-01T00:00:00.000Z",
+        "chatHistory":  [
+                            {
+                                "user":  "attendance report",
+                                "ai":  "Generating attendance report.",
+                                "action":  "attendance_report",
+                                "timestamp":  "2026-03-12T12:40:12.411Z"
+                            }
+                        ],
+        "actionLog":  [
+                          {
+                              "id":  101,
+                              "agentId":  11,
+                              "agentName":  "Analytics Dashboard",
+                              "userMessage":  "attendance report",
+                              "aiAction":  "attendance_report",
+                              "actionData":  {
+                                                 "threshold":  75
+                                             },
+                              "result":  true,
+                              "timestamp":  "2026-03-12T12:40:12.410Z"
+                          }
+                      ]
+    },
+    {
+        "id":  12,
+        "name":  "Faculty Profile",
+        "role":  "faculty",
+        "domain":  "faculty_profile",
+        "description":  "View and update your faculty profile - contact details, subjects, and experience.",
+        "purpose":  "Faculty profile management",
+        "allowedActions":  [
+                               "view_my_faculty_profile",
+                               "update_my_faculty_profile",
+                               "list_faculty"
+                           ],
+        "systemPrompt":  "You are the Faculty Profile Agent.",
+        "createdAt":  "2026-01-01T00:00:00.000Z",
+        "chatHistory":  [
+
+                        ],
+        "actionLog":  [
+
+                      ]
+    }
 ]

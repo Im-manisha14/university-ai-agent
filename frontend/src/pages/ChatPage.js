@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ChatBox from "../components/ChatBox";
 import { getAgent } from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 const DOMAIN_LABEL = {
   students: "Student Management",
@@ -14,20 +15,41 @@ const DOMAIN_LABEL = {
   courses: "Course Management",
   attendance: "Attendance",
   exams: "Exam Management",
+  academic: "Academic Advisory",
+  "student-attendance": "Attendance Tracking",
+  results: "Results & Grades",
+  timetable: "Timetable & Exams",
+  profile: "Profile Management",
+  notices: "Notice Board",
+  "class-management": "Class Management",
+  "attendance-management": "Attendance Management",
+  marks: "Marks Entry",
+  schedule: "Schedule Management",
+  analytics: "Analytics Dashboard",
+  "faculty-profile": "Faculty Profile",
 };
 
 export default function ChatPage() {
   const { agentId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [agent, setAgent] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getAgent(agentId)
-      .then((res) => setAgent(res.data.data))
+      .then((res) => {
+        const a = res.data.data;
+        // Role guard: redirect if agent role doesn't match user role
+        if (user?.role && a.role && a.role !== user.role) {
+          navigate("/agents");
+          return;
+        }
+        setAgent(a);
+      })
       .catch(() => navigate("/agents"))
       .finally(() => setLoading(false));
-  }, [agentId, navigate]);
+  }, [agentId, navigate, user]);
 
   if (loading) {
     return (
@@ -39,16 +61,10 @@ export default function ChatPage() {
   if (!agent) return null;
 
   return (
-    <div style={{ display:"flex", height:"calc(100vh - 56px)", overflow:"hidden" }}>
+    <div className="chat-layout">
 
       {/* ── Left panel: Agent info ── */}
-      <div style={{
-        width: 260, flexShrink: 0,
-        background: "var(--color-surface)",
-        borderRight: "1px solid var(--color-border)",
-        display: "flex", flexDirection: "column",
-        overflow: "hidden",
-      }}>
+      <div className="chat-left-panel">
         {/* Back */}
         <div style={{ padding:"14px 16px", borderBottom:"1px solid var(--color-border)" }}>
           <button
@@ -121,20 +137,42 @@ export default function ChatPage() {
       </div>
 
       {/* ── Right panel: Chat ── */}
-      <div style={{ flex:1, display:"flex", flexDirection:"column", overflow:"hidden", background:"var(--color-bg)" }}>
+      <div className="chat-right-panel">
         {/* Chat top bar */}
-        <div style={{
+        <div className="chat-topbar" style={{
           height: 48, background:"var(--color-surface)",
           borderBottom:"1px solid var(--color-border)",
           display:"flex", alignItems:"center",
           padding:"0 20px", gap:10, flexShrink:0,
         }}>
+          <button className="chat-back-mobile" onClick={() => navigate("/agents")}>←</button>
           <div style={{ width:8, height:8, borderRadius:"50%", background:"var(--color-success)" }} />
           <span style={{ fontSize:"0.875rem", fontWeight:600, color:"var(--color-text-1)" }}>
             {agent.name}
           </span>
           <span style={{ color:"var(--color-border-md)" }}>·</span>
           <span style={{ fontSize:"0.8125rem", color:"var(--color-text-4)" }}>Conversational AI</span>
+        </div>
+
+        {/* Agent info bar (mobile only — since left panel is hidden) */}
+        <div className="chat-agent-info-mobile">
+          <div style={{
+            width: 28, height: 28, borderRadius: 6,
+            background: "var(--color-accent-lt)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 10, fontWeight: 700, color: "var(--color-accent)", flexShrink: 0,
+          }}>
+            {agent.name.substring(0,2).toUpperCase()}
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+              <span className="badge badge-indigo" style={{ fontSize: "0.65rem" }}>
+                {DOMAIN_LABEL[agent.domain] || agent.domain}
+              </span>
+              <span className="text-caption">{agent.allowedActions?.length || 0} capabilities</span>
+            </div>
+            <div className="agent-desc-mobile">{agent.description}</div>
+          </div>
         </div>
 
         {/* Chat body */}

@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import { createAgent } from "../services/api";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-const TEMPLATES = [
-  { label: "Student Mgmt", purpose: "Manage student records, enrollment, and GPA tracking" },
-  { label: "Faculty Mgmt", purpose: "Manage faculty records, subject assignments, and workload" },
-  { label: "Course Mgmt", purpose: "Manage courses, curriculum, and semester scheduling" },
-  { label: "Attendance", purpose: "Track and report student attendance across courses" },
-  { label: "Exam Mgmt", purpose: "Schedule and manage examinations and assessments" },
+const STUDENT_TEMPLATES = [
+  { label: "Study Planner", purpose: "Help students plan study schedules, set revision goals, and manage assignment deadlines" },
+  { label: "Career Guidance", purpose: "Provide career advice, internship suggestions, and placement preparation tips for students" },
+  { label: "Library Assistant", purpose: "Help students find books, research papers, and library resources for their courses" },
+  { label: "Hostel & Campus", purpose: "Manage hostel room queries, campus facility info, and student welfare services" },
+  { label: "Fee & Scholarship", purpose: "Track fee payment status, scholarship eligibility, and financial aid information for students" },
+];
+
+const FACULTY_TEMPLATES = [
+  { label: "Assignment Manager", purpose: "Create, distribute, and grade student assignments and projects for faculty courses" },
+  { label: "Research Tracker", purpose: "Track faculty research publications, conference papers, and ongoing research projects" },
+  { label: "Leave Manager", purpose: "Manage faculty leave requests, substitution scheduling, and attendance records" },
+  { label: "Feedback Collector", purpose: "Collect and analyze student feedback on courses and teaching effectiveness" },
+  { label: "Curriculum Planner", purpose: "Plan and update course curriculum, syllabus content, and learning outcomes" },
 ];
 
 const DOMAIN_LABEL = {
@@ -24,6 +33,8 @@ export default function AgentCreator({ onCreated }) {
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const templates = user?.role === "faculty" ? FACULTY_TEMPLATES : STUDENT_TEMPLATES;
 
   const handleCreate = async () => {
     if (!purpose.trim()) { setError("Please describe the agent's purpose"); return; }
@@ -41,7 +52,7 @@ export default function AgentCreator({ onCreated }) {
   };
 
   return (
-    <div style={{ maxWidth: 640 }}>
+    <div className="agent-creator-wrap">
 
       {/* Section heading */}
       <div style={{ marginBottom: 28 }}>
@@ -58,7 +69,7 @@ export default function AgentCreator({ onCreated }) {
       <div style={{ marginBottom: 20 }}>
         <div className="text-label" style={{ marginBottom: 8 }}>Quick Templates</div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-          {TEMPLATES.map((t) => (
+          {templates.map((t) => (
             <button
               key={t.label}
               className="btn btn-secondary btn-sm"
@@ -71,7 +82,7 @@ export default function AgentCreator({ onCreated }) {
       </div>
 
       {/* Input form */}
-      <div className="card" style={{ padding: "24px 24px 20px", marginBottom: 0 }}>
+      <div className="card card-padded" style={{ marginBottom: 0 }}>
         <label className="form-label" htmlFor="agent-purpose">Agent Purpose</label>
         <textarea
           id="agent-purpose"
@@ -100,9 +111,9 @@ export default function AgentCreator({ onCreated }) {
       {/* Success result */}
       {result && (
         <div
-          className="card"
+          className="card card-padded"
           style={{
-            marginTop: 20, padding: 24,
+            marginTop: 20,
             borderColor: "var(--color-success-lt)",
             background: "var(--color-success-bg, #f0fdf4)",
           }}
@@ -132,7 +143,7 @@ export default function AgentCreator({ onCreated }) {
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: 16, marginBottom: 14 }}>
+          <div className="agent-result-meta">
             <div>
               <div className="text-caption">Domain</div>
               <span className="badge badge-indigo" style={{ marginTop: 4, display: "inline-block" }}>

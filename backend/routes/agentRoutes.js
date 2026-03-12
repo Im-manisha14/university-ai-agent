@@ -11,6 +11,7 @@ const {
   deleteAgent,
   getAgentLogs,
 } = require("../controllers/agentController");
+const { authenticateToken } = require("../middleware/authMiddleware");
 
 // GET  /api/agents          — List all agents
 router.get("/", getAllAgents);
@@ -19,7 +20,7 @@ router.get("/", getAllAgents);
 router.get("/:id", getAgent);
 
 // POST /api/agents          — Create a new agent (auto-generates from purpose)
-router.post("/", createAgent);
+router.post("/", authenticateToken, createAgent);
 
 // DELETE /api/agents/:id    — Delete an agent
 router.delete("/:id", deleteAgent);

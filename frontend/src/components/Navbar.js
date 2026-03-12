@@ -5,12 +5,14 @@
 
 import React from "react";
 import { useLocation } from "react-router-dom";
+import NotificationBell from "./NotificationBell";
 
 const PAGE_TITLES = {
   "/":          "Dashboard",
   "/agents":    "Agents",
   "/create":    "New Agent",
   "/analytics": "Analytics",
+  "/profile":   "Profile",
 };
 
 function getTitleForPath(pathname) {
@@ -18,13 +20,22 @@ function getTitleForPath(pathname) {
   return PAGE_TITLES[pathname] || "ZENAI";
 }
 
-export default function Navbar() {
+export default function Navbar({ onToggleSidebar }) {
   const location = useLocation();
   const pageTitle = getTitleForPath(location.pathname);
 
   return (
     <header className="topbar">
-      <span className="topbar-title">{pageTitle}</span>
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <button className="hamburger-btn" onClick={onToggleSidebar} aria-label="Toggle menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <span className="topbar-title">{pageTitle}</span>
+      </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         {/* Search */}
@@ -32,6 +43,9 @@ export default function Navbar() {
           <SearchIcon />
           <span>Search...</span>
         </div>
+
+        {/* Notifications */}
+        <NotificationBell />
 
         {/* User */}
         <div
